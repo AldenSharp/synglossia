@@ -1,0 +1,28 @@
+group 'acayl'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    extraLibs
+}
+
+dependencies {
+    compile('com.amazonaws:aws-lambda-java-core:1.1.0')
+    compile('com.amazonaws:aws-lambda-java-events:2.0.1')
+    compile('com.amazonaws:aws-java-sdk-dynamodb:1.11.264')
+    compile('org.projectlombok:lombok:1.16.18')
+    extraLibs group: 'com.amazonaws', name: 'aws-java-sdk-dynamodb', version: '1.11.264'
+}
+
+jar {
+    from {
+        configurations.extraLibs.collect {it.isDirectory() ? it : zipTree(it) }
+    }
+}

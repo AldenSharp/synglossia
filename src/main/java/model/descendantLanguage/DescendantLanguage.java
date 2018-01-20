@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import lombok.Builder;
 import lombok.Data;
+import service.LanguageService;
 import util.TypeUtils;
 
 @Data
@@ -20,7 +21,7 @@ public class DescendantLanguage {
 		return DescendantLanguage.builder()
 				.name(TypeUtils.getStringFromItem(item.get("name")))
 				.evolution(EvolutionStep.getListFromItemList(item.get("evolution").getL()))
-				.descendantLanguages(DescendantLanguage.getListFromItemList(item.get("descendantLanguages").getL()))
+                .descendantLanguages(getRecursiveDescendantLanguages(TypeUtils.getStringFromItem(item.get("name"))))
 				.build();
 	}
 
@@ -28,5 +29,9 @@ public class DescendantLanguage {
 	    return itemList.stream()
                 .map(item -> getFromItem(item.getM()))
                 .collect(Collectors.toList());
+    }
+
+    private static List<DescendantLanguage> getRecursiveDescendantLanguages(String languageName) {
+	    return new LanguageService().getDescendantLanguagesFromData(languageName);
     }
 }

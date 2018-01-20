@@ -38,7 +38,7 @@ public class LanguageService {
                 .collect(Collectors.toList());
     }
 
-    private List<DescendantLanguage> getDescendantLanguagesFromData(String parentLanguage) {
+    public List<DescendantLanguage> getDescendantLanguagesFromData(String parentLanguage) {
         List<Map<String, AttributeValue>> descendantLanguageItems = dynamoDBService.getDescendantLanguages(parentLanguage);
         return descendantLanguageItems.stream()
                 .map(DescendantLanguage::getFromItem)

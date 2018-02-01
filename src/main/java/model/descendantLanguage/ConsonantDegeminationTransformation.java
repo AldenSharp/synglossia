@@ -11,14 +11,10 @@ import java.util.Map;
 
 @Data
 public class ConsonantDegeminationTransformation extends Transformation {
-	private Integer syllablePosition;
-	private SyllablePositionType syllablePositionType;
-	
+
 	@Builder
-	public ConsonantDegeminationTransformation(SyllableCondition condition, Integer syllablePosition, SyllablePositionType syllablePositionType) {
+	public ConsonantDegeminationTransformation(SyllableCondition condition) {
         super(TransformationType.CONSONANT_DEGEMINATION, condition);
-        this.syllablePosition = syllablePosition;
-        this.syllablePositionType = syllablePositionType;
     }
 
     public static class ConsonantDegeminationTransformationBuilder extends TransformationBuilder {
@@ -29,8 +25,6 @@ public class ConsonantDegeminationTransformation extends Transformation {
 
     public static ConsonantDegeminationTransformation getFromItem(Map<String, AttributeValue> item) {
 	    return ConsonantDegeminationTransformation.builder()
-                .syllablePosition(TypeUtils.getIntegerFromItem(item.get("syllablePosition")))
-                .syllablePositionType(SyllablePositionType.getFromItem(item.get("syllablePositionType")))
                 .condition(SyllableCondition.getFromItem(item.get("condition").getM()))
                 .build();
     }

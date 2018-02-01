@@ -9,4 +9,4 @@ out
 gen
 .gradle/
 .idea/
-build/tmp/compileJava/
+.build/

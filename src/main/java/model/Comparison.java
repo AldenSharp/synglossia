@@ -4,7 +4,7 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import util.TypeUtils;
 
 public enum Comparison {
-    LESS_THAN("less than"), GREATER_THAN("greater than"), EQUALS("equals");
+    LESS_THAN("LESS_THAN"), GREATER_THAN("GREATER_THAN"), EQUALS("EQUALS");
 
     private final String value;
     Comparison(String value) {

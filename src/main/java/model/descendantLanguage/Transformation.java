@@ -21,14 +21,20 @@ public class Transformation {
                 return SoundChangeTransformation.getFromItem(item);
             case SOUND_DELETION:
                 return SoundDeletionTransformation.getFromItem(item);
+            case SOUND_INSERTION:
+                return SoundInsertionTransformation.getFromItem(item);
             case SOUND_MIGRATION:
                 return SoundMigrationTransformation.getFromItem(item);
             case SOUND_COPY:
                 return SoundCopyTransformation.getFromItem(item);
+            case SOUND_SWAP:
+                return SoundSwapTransformation.getFromItem(item);
             case CONSONANT_DEGEMINATION:
                 return ConsonantDegeminationTransformation.getFromItem(item);
             case SYLLABLE_COLLAPSE:
                 return SyllableCollapseTransformation.getFromItem(item);
+            case SYLLABLE_INSERTION:
+                return SyllableInsertionTransformation.getFromItem(item);
             case STRESS_SHIFT:
                 return StressShiftTransformation.getFromItem(item);
         }

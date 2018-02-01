@@ -55,8 +55,12 @@ public class SyllableCondition {
                 return MatchSyllableCondition.getFromItem(item);
             case SOUND_ARRAY_MATCH:
                 return SoundArrayMatchSyllableCondition.getFromItem(item);
+            case LENGTH:
+                return LengthSyllableCondition.getFromItem(item);
             case STRESSED:
                 return StressedSyllableCondition.getFromItem(item);
+            case BEFORE_STRESS:
+                return BeforeStressSyllableCondition.getFromItem(item);
             case STRESS_EXISTENCE:
                 return StressExistenceSyllableCondition.getFromItem(item);
             case STRESS_UNIQUENESS:

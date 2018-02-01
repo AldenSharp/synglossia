@@ -16,7 +16,7 @@ public class SoundMigration {
 	private Integer syllableShift;
 	private Integer toPosition;
 
-	private static SoundMigration getFromItem(Map<String, AttributeValue> item) {
+	public static SoundMigration getFromItem(Map<String, AttributeValue> item) {
 	    return SoundMigration.builder()
                 .fromPosition(TypeUtils.getIntegerFromItem(item.get("fromPosition")))
                 .syllableShift(TypeUtils.getIntegerFromItem(item.get("syllableShift")))

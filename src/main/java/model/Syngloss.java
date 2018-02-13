@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +11,10 @@ import model.descendantLanguage.DescendantLanguage;
 import model.prosody.Prosody;
 import model.syllableCondition.SyllableCondition;
 import model.writingSystem.WritingSystem;
+import util.ExceptionUtils;
 import util.TypeUtils;
+
+import static util.FieldType.*;
 
 @Data
 @Builder
@@ -25,13 +29,18 @@ public class Syngloss {
     private List<DescendantLanguage> descendantLanguages;
 
     public static Syngloss getFromItem(Map<String, AttributeValue> item) {
+        ExceptionUtils.checkObjectElements(
+                Arrays.asList("name", "date", "phonotactics", "vowelCore", "prosody", "validity"),
+                Arrays.asList(STRING, NUMBER, LIST, NUMBER, OBJECT, OBJECT),
+                "Syngloss", item
+        );
         return Syngloss.builder()
                 .name(TypeUtils.getStringFromItem(item.get("name")))
                 .date(TypeUtils.getIntegerFromItem(item.get("date")))
-                .phonotactics(PhonotacticsPosition.getListListFromItemList(item.get("phonotactics").getL()))
+                .phonotactics(PhonotacticsPosition.getListListFromItemList(item.get("phonotactics").getL(), "Syngloss phonotactics"))
                 .vowelCore(Integer.parseInt(item.get("vowelCore").getN()))
-                .prosody(Prosody.getFromItem(item.get("prosody").getM()))
-                .validity(SyllableCondition.getFromItem(item.get("validity").getM()))
+                .prosody(Prosody.getFromItem(item.get("prosody").getM(), "Syngloss prosody"))
+                .validity(SyllableCondition.getFromItem(item.get("validity").getM(), "Syngloss validity"))
                 .build();
     }
 }

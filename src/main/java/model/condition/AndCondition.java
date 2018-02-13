@@ -1,11 +1,15 @@
 package model.condition;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import lombok.Builder;
 import lombok.Data;
+import util.ExceptionUtils;
+
+import static util.FieldType.LIST;
 
 @Data
 public class AndCondition extends Condition {
@@ -23,9 +27,10 @@ public class AndCondition extends Condition {
             }
     }
 
-    public static AndCondition getFromItem(Map<String, AttributeValue> item) {
+    public static AndCondition getFromItem(Map<String, AttributeValue> item, String location) {
+        ExceptionUtils.checkObjectElements(Collections.singletonList("conditions"), Collections.singletonList(LIST), location, item);
         return AndCondition.builder()
-                .conditions(Condition.getListFromItemList(item.get("conditions").getL()))
+                .conditions(Condition.getListFromItemList(item.get("conditions").getL(), location + ": conjunct condition"))
                 .build();
     }
 }

@@ -2,10 +2,8 @@ package model.descendantLanguage;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import model.syllableCondition.SyllableCondition;
-import model.syllableCondition.SyllablePositionType;
 import lombok.Builder;
 import lombok.Data;
-import util.TypeUtils;
 
 import java.util.Map;
 
@@ -23,9 +21,9 @@ public class ConsonantDegeminationTransformation extends Transformation {
         }
     }
 
-    public static ConsonantDegeminationTransformation getFromItem(Map<String, AttributeValue> item) {
+    public static ConsonantDegeminationTransformation getFromItem(Map<String, AttributeValue> item, String location) {
 	    return ConsonantDegeminationTransformation.builder()
-                .condition(SyllableCondition.getFromItem(item.get("condition").getM()))
+                .condition(SyllableCondition.getFromItem(item.get("condition").getM(), location + ": syllable condition"))
                 .build();
     }
 }

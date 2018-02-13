@@ -1,11 +1,15 @@
 package model.syllableCondition;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import lombok.Builder;
 import lombok.Data;
+import util.ExceptionUtils;
+
+import static util.FieldType.LIST;
 
 @Data
 public class AndSyllableCondition extends SyllableCondition {
@@ -23,9 +27,10 @@ public class AndSyllableCondition extends SyllableCondition {
             }
     }
 
-    public static AndSyllableCondition getFromItem(Map<String, AttributeValue> item) {
+    public static AndSyllableCondition getFromItem(Map<String, AttributeValue> item, String location) {
+        ExceptionUtils.checkObjectElements(Collections.singletonList("conditions"), Collections.singletonList(LIST), location, item);
         return AndSyllableCondition.builder()
-                .conditions(SyllableCondition.getListFromItemList(item.get("conditions").getL()))
+                .conditions(SyllableCondition.getListFromItemList(item.get("conditions").getL(), location + ": conjunct condition"))
                 .build();
     }
 }

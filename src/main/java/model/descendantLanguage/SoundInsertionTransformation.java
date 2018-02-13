@@ -4,9 +4,14 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import lombok.Builder;
 import lombok.Data;
 import model.syllableCondition.SyllableCondition;
+import util.ExceptionUtils;
 import util.TypeUtils;
 
+import java.util.Arrays;
 import java.util.Map;
+
+import static util.FieldType.NUMBER;
+import static util.FieldType.STRING;
 
 @Data
 public class SoundInsertionTransformation extends Transformation {
@@ -26,11 +31,15 @@ public class SoundInsertionTransformation extends Transformation {
         }
     }
 
-    public static SoundInsertionTransformation getFromItem(Map<String, AttributeValue> item) {
+    public static SoundInsertionTransformation getFromItem(Map<String, AttributeValue> item, String location) {
+        ExceptionUtils.checkObjectElements(
+                Arrays.asList("position", "sound"),
+                Arrays.asList(NUMBER, STRING),
+                location, item);
         return SoundInsertionTransformation.builder()
                 .position(TypeUtils.getIntegerFromItem(item.get("position")))
                 .sound(TypeUtils.getStringFromItem(item.get("sound")))
-                .condition(SyllableCondition.getFromItem(item.get("condition").getM()))
+                .condition(SyllableCondition.getFromItem(item.get("condition").getM(), location + ": syllable condition"))
                 .build();
     }
 }

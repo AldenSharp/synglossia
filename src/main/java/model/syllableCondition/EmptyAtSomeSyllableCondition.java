@@ -1,11 +1,16 @@
 package model.syllableCondition;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import lombok.Builder;
 import lombok.Data;
+import util.ExceptionUtils;
+
+import static util.FieldType.LIST;
+import static util.FieldType.STRING;
 
 @Data
 public class EmptyAtSomeSyllableCondition extends SyllableCondition {
@@ -25,9 +30,13 @@ public class EmptyAtSomeSyllableCondition extends SyllableCondition {
             }
     }
 
-    public static EmptyAtSomeSyllableCondition getFromItem(Map<String, AttributeValue> item) {
+    public static EmptyAtSomeSyllableCondition getFromItem(Map<String, AttributeValue> item, String location) {
+        ExceptionUtils.checkObjectElements(
+                Arrays.asList("positions", "syllablePositionType"),
+                Arrays.asList(LIST, STRING),
+                location, item);
         return EmptyAtSomeSyllableCondition.builder()
-                .positions(SoundPosition.getListFromItemList(item.get("positions").getL()))
+                .positions(SoundPosition.getListFromItemList(item.get("positions").getL(), location + ": position object"))
                 .syllablePositionType(SyllablePositionType.getFromItem(item.get("syllablePositionType")))
                 .build();
     }

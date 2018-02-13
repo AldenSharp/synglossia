@@ -1,12 +1,16 @@
 package model.syllableCondition;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import lombok.Builder;
 import lombok.Data;
+import util.ExceptionUtils;
 import util.TypeUtils;
+
+import static util.FieldType.LIST;
 
 @Data
 public class WordFinalClustersSyllableCondition extends SyllableCondition {
@@ -24,9 +28,10 @@ public class WordFinalClustersSyllableCondition extends SyllableCondition {
             }
     }
 
-    public static WordFinalClustersSyllableCondition getFromItem(Map<String, AttributeValue> item) {
+    public static WordFinalClustersSyllableCondition getFromItem(Map<String, AttributeValue> item, String location) {
+        ExceptionUtils.checkObjectElements(Collections.singletonList("values"), Collections.singletonList(LIST), location, item);
         return WordFinalClustersSyllableCondition.builder()
-                .values(TypeUtils.getStringListListFromItemList(item.get("values").getL()))
+                .values(TypeUtils.getStringListListFromItemList(item.get("values").getL(), location + ": value item"))
                 .build();
     }
 }

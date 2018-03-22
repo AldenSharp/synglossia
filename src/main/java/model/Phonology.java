@@ -3,12 +3,8 @@ package model;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import lombok.Builder;
 import lombok.Data;
-import model.descendantLanguage.DescendantLanguage;
 import model.prosody.Prosody;
-import model.syllableCondition.SyllableCondition;
-import model.writingSystem.WritingSystem;
 import util.ExceptionUtils;
-import util.TypeUtils;
 
 import java.util.Arrays;
 import java.util.List;

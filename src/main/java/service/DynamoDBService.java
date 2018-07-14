@@ -11,9 +11,9 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.QueryRequest;
 
-public class DynamoDBService {
+class DynamoDBService {
 
-    public Map<String, AttributeValue> getParentLanguage(String name) throws IOException {
+    Map<String, AttributeValue> getParentLanguage(String name) throws IOException {
         Map<String, String> nameMap = new HashMap<>();
         nameMap.put("#name", "name");
         nameMap.put("#type", "type");
@@ -33,7 +33,7 @@ public class DynamoDBService {
         return items.get(0);
     }
 
-    public List<Map<String, AttributeValue>> getDescendantLanguages(String parentLanguage) {
+    List<Map<String, AttributeValue>> getDescendantLanguages(String parentLanguage) {
         Map<String, String> nameMap = new HashMap<>();
         nameMap.put("#parentLanguage", "parentLanguage");
         nameMap.put("#type", "type");
@@ -50,7 +50,7 @@ public class DynamoDBService {
         ).getItems();
     }
 
-    public List<Map<String, AttributeValue>> getWritingSystems(String language) {
+    List<Map<String, AttributeValue>> getWritingSystems(String language) {
         Map<String, String> nameMap = new HashMap<>();
         nameMap.put("#language", "language");
         Map<String, AttributeValue> valueMap = new HashMap<>();

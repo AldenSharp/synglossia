@@ -8,7 +8,7 @@ import service.LanguageService;
 
 public class LanguageHandler {
 
-    LanguageService languageService = new LanguageService();
+    private LanguageService languageService = new LanguageService();
 
     public Syngloss getSyngloss(Map<String, String> languageNameMap) throws IOException {
         return languageService.getSyngloss(languageNameMap.get("a"));

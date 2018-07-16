@@ -64,6 +64,22 @@ class DynamoDBService {
         ).getItems();
     }
 
+    List<Map<String, AttributeValue>> getGrammaticalMorphemes(String language) {
+        Map<String, String> nameMap = new HashMap<>();
+        nameMap.put("#language", "language");
+        nameMap.put("#function", "function");
+        Map<String, AttributeValue> valueMap = new HashMap<>();
+        valueMap.put(":language", new AttributeValue(language));
+        valueMap.put(":function", new AttributeValue("GRAMMATICAL"));
+        return dynamoDB().query(new QueryRequest()
+                .withTableName("Morpheme")
+                .withKeyConditionExpression("#language = :language")
+                .withFilterExpression("#function = :function")
+                .withExpressionAttributeNames(nameMap)
+                .withExpressionAttributeValues(valueMap)
+        ).getItems();
+    }
+
     private AmazonDynamoDB dynamoDB() {
         return AmazonDynamoDBClientBuilder.standard()
                 .withRegion(Regions.US_EAST_1)

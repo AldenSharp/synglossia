@@ -20,12 +20,12 @@ public class NominalMorphology {
     private List<Number> numbers;
     private List<Case> cases;
     private List<NounClass> classes;
-    private List<NounEnding> endings;
+    private List<NounMorpheme> morphemes;
 
     public static NominalMorphology getFromItem(Map<String, AttributeValue> item, String location) {
         ExceptionUtils.checkObjectElements(
-                Arrays.asList("genders", "numbers", "cases", "classes", "endings"),
-                Arrays.asList(LIST, LIST, LIST, LIST, LIST),
+                Arrays.asList("genders", "numbers", "cases", "classes"),
+                Arrays.asList(LIST, LIST, LIST, LIST),
                 location, item
         );
         return NominalMorphology.builder()
@@ -33,7 +33,10 @@ public class NominalMorphology {
                 .numbers(Number.getListFromItemList(item.get("numbers").getL(), location + ": number"))
                 .cases(Case.getListFromItemList(item.get("cases").getL(), location + ": case"))
                 .classes(NounClass.getListFromItemList(item.get("classes").getL(), location + ": class"))
-                .endings(NounEnding.getListFromItemList(item.get("endings").getL(), location + ": endings"))
                 .build();
+    }
+
+    void setMorphemes(List<Map<String, AttributeValue>> morphemeItems) {
+        this.morphemes = NounMorpheme.getListFromItemList(morphemeItems, "Nominal morphology");
     }
 }

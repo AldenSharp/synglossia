@@ -13,13 +13,9 @@ public enum Number {
     SINGULAR("SINGULAR"), DUAL("DUAL"), PLURAL("PLURAL");
 
     private final String value;
-    Number(String value) {
-        this.value = value;
-    }
+    Number(String value) { this.value = value; }
 
-    public static Number getFromItem(AttributeValue item) {
-        return valueOf(TypeUtils.getStringFromItem(item));
-    }
+    public static Number getFromItem(AttributeValue item) { return valueOf(TypeUtils.getStringFromItem(item)); }
 
     public static List<Number> getListFromItemList(List<AttributeValue> itemList, String location) {
         ExceptionUtils.checkListElements(itemList, location, STRING);

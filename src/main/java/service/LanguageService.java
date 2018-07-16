@@ -19,6 +19,8 @@ public class LanguageService {
         Syngloss syngloss = Syngloss.getFromItem(parentLanguageItem);
         syngloss.setWritingSystems(getWritingSystemsFromData(languageName));
         syngloss.setDescendantLanguages(getDescendantLanguagesFromData(languageName));
+        List<Map<String, AttributeValue>> morphemeItems = dynamoDBService.getGrammaticalMorphemes(languageName);
+        syngloss.getMorphology().setMorphemes(morphemeItems);
         return syngloss;
     }
 

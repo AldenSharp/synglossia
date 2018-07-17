@@ -11,24 +11,25 @@ import java.util.List;
 import java.util.Map;
 
 import static util.FieldType.LIST;
+import static util.FieldType.OBJECT;
 import static util.FieldType.STRING;
 
 @Data
 @Builder
 public class Word {
     private PartOfSpeech partOfSpeech;
-    private List<Syllable> spokenForm;
+    private SpokenWord spokenForm;
     private List<WrittenWord> writtenForms;
 
     public static Word getFromItem(Map<String, AttributeValue> item) {
         ExceptionUtils.checkObjectElements(
                 Arrays.asList("partOfSpeech", "spokenForm", "writtenForms"),
-                Arrays.asList(STRING, LIST, LIST),
+                Arrays.asList(STRING, OBJECT, LIST),
                 "Word", item
         );
         return Word.builder()
                 .partOfSpeech(PartOfSpeech.valueOf(item.get("partOfSpeech").getS()))
-                .spokenForm(Syllable.getListFromItemList(item.get("spokenForm").getL(), "Word"))
+                .spokenForm(SpokenWord.getFromItem(item.get("spokenForm").getM(), "Word"))
                 .writtenForms(WrittenWord.getListFromItemList(item.get("writtenForms").getL(), "Word"))
                 .build();
     }

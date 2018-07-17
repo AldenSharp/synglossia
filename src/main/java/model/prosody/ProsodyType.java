@@ -4,7 +4,7 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import util.TypeUtils;
 
 public enum ProsodyType {
-	STRESS("STRESS"), PITCH("PITCH");
+	STRESS("STRESS"), PITCH("PITCH"), NONE("NONE");
 	
 	private final String value;
 	ProsodyType(String value) {

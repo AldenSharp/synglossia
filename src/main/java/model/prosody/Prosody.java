@@ -25,6 +25,6 @@ public class Prosody {
             case STRESS:
                 return StressProsody.getFromItem(item, locationWithType);
         }
-        return Prosody.builder().build();
+        return Prosody.builder().type(ProsodyType.valueOf(item.get("type").getS())).build();
 	}
 }

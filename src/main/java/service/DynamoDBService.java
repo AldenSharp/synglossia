@@ -80,6 +80,35 @@ class DynamoDBService {
         ).getItems();
     }
 
+    List<Map<String, AttributeValue>> getSemanticMorphemes(String language) {
+        Map<String, String> nameMap = new HashMap<>();
+        nameMap.put("#language", "language");
+        nameMap.put("#function", "function");
+        Map<String, AttributeValue> valueMap = new HashMap<>();
+        valueMap.put(":language", new AttributeValue(language));
+        valueMap.put(":function", new AttributeValue("SEMANTIC"));
+        return dynamoDB().query(new QueryRequest()
+                .withTableName("Morpheme")
+                .withKeyConditionExpression("#language = :language")
+                .withFilterExpression("#function = :function")
+                .withExpressionAttributeNames(nameMap)
+                .withExpressionAttributeValues(valueMap)
+        ).getItems();
+    }
+
+    List<Map<String, AttributeValue>> getAttestations(String language) {
+        Map<String, String> nameMap = new HashMap<>();
+        nameMap.put("#language", "language");
+        Map<String, AttributeValue> valueMap = new HashMap<>();
+        valueMap.put(":language", new AttributeValue(language));
+        return dynamoDB().query(new QueryRequest()
+                .withTableName("Attestation")
+                .withKeyConditionExpression("#language = :language")
+                .withExpressionAttributeNames(nameMap)
+                .withExpressionAttributeValues(valueMap)
+        ).getItems();
+    }
+
     private AmazonDynamoDB dynamoDB() {
         return AmazonDynamoDBClientBuilder.standard()
                 .withRegion(Regions.US_EAST_1)

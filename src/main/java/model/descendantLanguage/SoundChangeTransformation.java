@@ -12,17 +12,16 @@ import util.ExceptionUtils;
 import util.TypeUtils;
 
 import static util.FieldType.LIST;
-import static util.FieldType.NUMBER;
 
 @Data
 public class SoundChangeTransformation extends Transformation {
-	private Integer position;
+	private List<Integer> positions;
 	private List<SoundChange> changes;
 	
 	@Builder
-	public SoundChangeTransformation(SyllableCondition condition, Integer position, List<SoundChange> changes) {
+	public SoundChangeTransformation(SyllableCondition condition, List<Integer> positions, List<SoundChange> changes) {
         super(TransformationType.SOUND_CHANGE, condition);
-        this.position = position;
+        this.positions = positions;
         this.changes = changes;
     }
 
@@ -34,11 +33,11 @@ public class SoundChangeTransformation extends Transformation {
 
     public static SoundChangeTransformation getFromItem(Map<String, AttributeValue> item, String location) {
         ExceptionUtils.checkObjectElements(
-                Arrays.asList("position", "changes"),
-                Arrays.asList(NUMBER, LIST),
+                Arrays.asList("positions", "changes"),
+                Arrays.asList(LIST, LIST),
                 location, item);
 	    return SoundChangeTransformation.builder()
-                .position(TypeUtils.getIntegerFromItem(item.get("position")))
+                .positions(TypeUtils.getIntegerListFromItemList(item.get("positions").getL(), location + ": positions object"))
                 .changes(SoundChange.getListFromItemList(item.get("changes").getL(), location + ": sound change object"))
                 .condition(SyllableCondition.getFromItem(item.get("condition").getM(), location + ": syllable condition"))
                 .build();

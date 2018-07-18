@@ -13,6 +13,20 @@ import com.amazonaws.services.dynamodbv2.model.QueryRequest;
 
 class DynamoDBService {
 
+    List<Map<String, AttributeValue>> getAllParentLanguages() {
+        Map<String, String> nameMap = new HashMap<>();
+        nameMap.put("#type", "type");
+        Map<String, AttributeValue> valueMap = new HashMap<>();
+        valueMap.put(":type", new AttributeValue("PARENT"));
+        return dynamoDB().query(new QueryRequest()
+                .withTableName("Language")
+                .withIndexName("type-index")
+                .withKeyConditionExpression("#type = :type")
+                .withExpressionAttributeNames(nameMap)
+                .withExpressionAttributeValues(valueMap)
+        ).getItems();
+    }
+
     Map<String, AttributeValue> getParentLanguage(String name) throws IOException {
         Map<String, String> nameMap = new HashMap<>();
         nameMap.put("#name", "name");

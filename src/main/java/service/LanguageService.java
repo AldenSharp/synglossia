@@ -14,6 +14,11 @@ public class LanguageService {
 
     private DynamoDBService dynamoDBService = new DynamoDBService();
 
+    public List<String> getParentLanguageNames() {
+        return dynamoDBService.getAllParentLanguages()
+                .stream().map(item -> item.get("name").getS()).collect(Collectors.toList());
+    }
+
     public Syngloss getSyngloss(String languageName) throws IOException {
         Map<String, AttributeValue> parentLanguageItem = dynamoDBService.getParentLanguage(languageName);
         Syngloss syngloss = Syngloss.getFromItem(parentLanguageItem);

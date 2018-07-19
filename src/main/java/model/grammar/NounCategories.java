@@ -3,10 +3,12 @@ package model.grammar;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import lombok.Builder;
 import lombok.Data;
+import model.NominalMorphology;
 import util.ExceptionUtils;
 import util.TypeUtils;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -25,10 +27,12 @@ public class NounCategories {
 
     public static NounCategories getFromItem(Map<String, AttributeValue> item, String location) {
         ExceptionUtils.checkObjectElements(
-                Arrays.asList("classes", "genders", "numbers", "cases"),
-                Arrays.asList(LIST, LIST, LIST, LIST),
+                Arrays.asList("numbers", "cases"),
+                Arrays.asList(LIST, LIST),
                 location, item
         );
+        item.computeIfAbsent("classes", key -> new AttributeValue().withL(Collections.singletonList(new AttributeValue("COMMON"))));
+        item.computeIfAbsent("genders", key -> new AttributeValue().withL(Collections.singletonList(new AttributeValue("COMMON"))));
         return NounCategories.builder()
                 .classes(TypeUtils.getStringListFromItemList(item.get("classes").getL(), location + ": class"))
                 .genders(Gender.getListFromItemList(item.get("genders").getL(), location + ": gender"))

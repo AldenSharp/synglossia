@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import static util.FieldType.STRING;
 
 public enum Gender {
-    MASCULINE("MASCULINE"), FEMININE("FEMININE"), NEUTER("NEUTER");
+    MASCULINE("MASCULINE"), FEMININE("FEMININE"), NEUTER("NEUTER"), COMMON("COMMON");
 
     private final String value;
     Gender(String value) {

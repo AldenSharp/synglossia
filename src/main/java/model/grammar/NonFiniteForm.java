@@ -10,7 +10,8 @@ import java.util.stream.Collectors;
 import static util.FieldType.STRING;
 
 public enum NonFiniteForm {
-    INFINITIVE("INFINITIVE"), GERUND("GERUND"), PARTICIPLE("PARTICIPLE"), SUPINE("SUPINE"), GERUNDIVE("GERUNDIVE");
+    INFINITIVE("INFINITIVE"), GERUND("GERUND"), PARTICIPLE("PARTICIPLE"), SUPINE("SUPINE"), GERUNDIVE("GERUNDIVE"),
+    VERBAL_NOUN("VERBAL_NOUN");
 
     private final String value;
     NonFiniteForm(String value) {

@@ -7,9 +7,7 @@ import model.grammar.*;
 import model.grammar.Number;
 import util.ExceptionUtils;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static util.FieldType.LIST;
 
@@ -24,10 +22,11 @@ public class NominalMorphology {
 
     public static NominalMorphology getFromItem(Map<String, AttributeValue> item, String location) {
         ExceptionUtils.checkObjectElements(
-                Arrays.asList("genders", "numbers", "cases", "classes"),
-                Arrays.asList(LIST, LIST, LIST, LIST),
+                Arrays.asList("genders", "numbers", "cases"),
+                Arrays.asList(LIST, LIST, LIST),
                 location, item
         );
+        item.computeIfAbsent("classes", key -> NominalMorphology.setDefaultClasses());
         return NominalMorphology.builder()
                 .genders(Gender.getListFromItemList(item.get("genders").getL(), location + ": gender"))
                 .numbers(Number.getListFromItemList(item.get("numbers").getL(), location + ": number"))
@@ -37,6 +36,15 @@ public class NominalMorphology {
     }
 
     void setMorphemes(List<Map<String, AttributeValue>> morphemeItems) {
-        this.morphemes = NounMorpheme.getListFromItemList(morphemeItems, "Nominal morphology");
+        this.morphemes = NounMorpheme.getListFromItemList(morphemeItems, "Nominal morphology: morphemes");
+    }
+
+    private static AttributeValue setDefaultClasses() {
+        Map<String, AttributeValue> classItem = new HashMap<>();
+        classItem.put("name", new AttributeValue("COMMON"));
+        classItem.put("genders", new AttributeValue().withL(Collections.singleton(new AttributeValue("COMMON"))));
+        classItem.put("endingStartPosition", new AttributeValue().withN("0"));
+        classItem.put("type", new AttributeValue("DEFAULT"));
+        return new AttributeValue().withL(Collections.singletonList(new AttributeValue().withM(classItem)));
     }
 }

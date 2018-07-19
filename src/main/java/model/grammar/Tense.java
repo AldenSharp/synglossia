@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import static util.FieldType.STRING;
 
 public enum Tense {
-    PRESENT("PRESENT"), PAST("PAST"), FUTURE("FUTURE");
+    COMMON("COMMON"), PRESENT("PRESENT"), PAST("PAST"), FUTURE("FUTURE");
 
     private final String value;
     Tense(String value) {

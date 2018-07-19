@@ -26,13 +26,13 @@ public class VerbMorphology {
     List<VerbMorpheme> morphemes;
 
     public static VerbMorphology getFromItem(Map<String, AttributeValue> item, String location) {
-        ExceptionUtils.checkObjectElements(
-                Arrays.asList("persons", "numbers", "voices", "aspects", "moods", "nonFiniteForms"),
-                Arrays.asList(LIST, LIST, LIST, LIST, LIST, LIST),
-                location, item
-        );
         item.computeIfAbsent("tenses", key -> new AttributeValue().withL(Collections.singletonList(new AttributeValue("COMMON"))));
         item.computeIfAbsent("classes", key -> VerbMorphology.setDefaultClasses());
+        ExceptionUtils.checkObjectElements(
+                Arrays.asList("persons", "numbers", "voices", "tenses", "aspects", "moods", "nonFiniteForms", "classes"),
+                Arrays.asList(LIST, LIST, LIST, LIST, LIST, LIST, LIST, LIST),
+                location, item
+        );
         return VerbMorphology.builder()
                 .persons(Person.getListFromItemList(item.get("persons").getL(), location + ": person"))
                 .numbers(Number.getListFromItemList(item.get("numbers").getL(), location + ": number"))

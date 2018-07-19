@@ -26,13 +26,13 @@ public class NounCategories {
     List<Case> cases;
 
     public static NounCategories getFromItem(Map<String, AttributeValue> item, String location) {
-        ExceptionUtils.checkObjectElements(
-                Arrays.asList("numbers", "cases"),
-                Arrays.asList(LIST, LIST),
-                location, item
-        );
         item.computeIfAbsent("classes", key -> new AttributeValue().withL(Collections.singletonList(new AttributeValue("COMMON"))));
         item.computeIfAbsent("genders", key -> new AttributeValue().withL(Collections.singletonList(new AttributeValue("COMMON"))));
+        ExceptionUtils.checkObjectElements(
+                Arrays.asList("classes", "genders", "numbers", "cases"),
+                Arrays.asList(LIST, LIST, LIST, LIST),
+                location, item
+        );
         return NounCategories.builder()
                 .classes(TypeUtils.getStringListFromItemList(item.get("classes").getL(), location + ": class"))
                 .genders(Gender.getListFromItemList(item.get("genders").getL(), location + ": gender"))

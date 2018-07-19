@@ -7,6 +7,7 @@ import util.ExceptionUtils;
 import util.TypeUtils;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -22,6 +23,7 @@ class Syllable {
     private List<String> phonemes;
 
     private static Syllable getFromItem(Map<String, AttributeValue> item, String location) {
+            item.computeIfAbsent("accent", key -> new AttributeValue().withN("0"));
             ExceptionUtils.checkObjectElements(
                     Arrays.asList("accent", "phonemes"),
                     Arrays.asList(NUMBER, LIST),

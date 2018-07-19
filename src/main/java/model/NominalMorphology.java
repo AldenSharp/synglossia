@@ -21,12 +21,12 @@ public class NominalMorphology {
     private List<NounMorpheme> morphemes;
 
     public static NominalMorphology getFromItem(Map<String, AttributeValue> item, String location) {
+        item.computeIfAbsent("classes", key -> NominalMorphology.setDefaultClasses());
         ExceptionUtils.checkObjectElements(
-                Arrays.asList("genders", "numbers", "cases"),
-                Arrays.asList(LIST, LIST, LIST),
+                Arrays.asList("genders", "numbers", "cases", "classes"),
+                Arrays.asList(LIST, LIST, LIST, LIST),
                 location, item
         );
-        item.computeIfAbsent("classes", key -> NominalMorphology.setDefaultClasses());
         return NominalMorphology.builder()
                 .genders(Gender.getListFromItemList(item.get("genders").getL(), location + ": gender"))
                 .numbers(Number.getListFromItemList(item.get("numbers").getL(), location + ": number"))

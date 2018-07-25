@@ -7,6 +7,7 @@ public enum ConditionType {
 	DEFAULT(""),
 	AND("and"),
 	OR("or"),
+	NOT("not"),
 	BEFORE("before"),
 	AFTER("after"),
 	CONSONANTAL("consonantal"),

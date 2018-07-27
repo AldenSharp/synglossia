@@ -21,6 +21,7 @@ public class Transformation {
 	private SyllableCondition condition;
 
 	private static Transformation getFromItem(Map<String, AttributeValue> item, String location) {
+        item.computeIfAbsent("condition", key -> SyllableCondition.getDefaultItem());
         ExceptionUtils.checkObjectElements(
                 Arrays.asList("type", "condition"),
                 Arrays.asList(STRING, OBJECT),

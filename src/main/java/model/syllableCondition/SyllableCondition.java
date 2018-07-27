@@ -6,6 +6,7 @@ import lombok.Data;
 import util.ExceptionUtils;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -87,5 +88,11 @@ public class SyllableCondition {
 	    return itemList.stream()
                 .map(item -> getFromItem(item.getM(), location + " at position " + itemList.indexOf(item)))
                 .collect(Collectors.toList());
+    }
+
+    public static AttributeValue getDefaultItem() {
+        Map<String, AttributeValue> conditionMap = new HashMap<>();
+        conditionMap.put("type", new AttributeValue().withS(SyllableConditionType.DEFAULT.name()));
+        return new AttributeValue().withM(conditionMap);
     }
 }

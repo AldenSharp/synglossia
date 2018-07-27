@@ -27,6 +27,7 @@ public class Syngloss {
     private List<DescendantLanguage> descendantLanguages;
 
     public static Syngloss getFromItem(Map<String, AttributeValue> item) {
+        item.computeIfAbsent("validity", key -> SyllableCondition.getDefaultItem());
         ExceptionUtils.checkObjectElements(
                 Arrays.asList("name", "date", "phonology", "morphology", "validity"),
                 Arrays.asList(STRING, NUMBER, OBJECT, OBJECT, OBJECT),

@@ -21,6 +21,7 @@ public class StressParadigmPosition {
 	private SyllableCondition condition;
 
 	private static StressParadigmPosition getFromItem(Map<String, AttributeValue> item, String location) {
+        item.computeIfAbsent("condition", key -> SyllableCondition.getDefaultItem());
         ExceptionUtils.checkObjectElements(
                 Arrays.asList("value", "condition"),
                 Arrays.asList(NUMBER, OBJECT),

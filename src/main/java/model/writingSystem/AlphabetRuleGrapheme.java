@@ -18,23 +18,24 @@ import static util.FieldType.STRING;
 @Builder
 @Data
 public class AlphabetRuleGrapheme {
-	private String value;
-	private Condition condition;
+    private String value;
+    private Condition condition;
 
-	private static AlphabetRuleGrapheme getFromItem(Map<String, AttributeValue> item, String location) {
+    private static AlphabetRuleGrapheme getFromItem(Map<String, AttributeValue> item, String location) {
+        item.computeIfAbsent("condition", key -> Condition.getDefaultItem());
         ExceptionUtils.checkObjectElements(
-        		Arrays.asList("value", "condition"),
+                Arrays.asList("value", "condition"),
                 Arrays.asList(STRING, OBJECT),
                 location, item);
-	    return AlphabetRuleGrapheme.builder()
+        return AlphabetRuleGrapheme.builder()
                 .value(TypeUtils.getStringFromItem(item.get("value")))
                 .condition(Condition.getFromItem(item.get("condition").getM(), location + ": grapheme condition"))
                 .build();
     }
 
     public static List<AlphabetRuleGrapheme> getListFromItemList(List<AttributeValue> itemList, String location) {
-	    ExceptionUtils.checkListElements(itemList, location, OBJECT);
-	    return itemList.stream()
+        ExceptionUtils.checkListElements(itemList, location, OBJECT);
+        return itemList.stream()
                 .map(item -> getFromItem(item.getM(), location + " at position " + itemList.indexOf(item)))
                 .collect(Collectors.toList());
     }

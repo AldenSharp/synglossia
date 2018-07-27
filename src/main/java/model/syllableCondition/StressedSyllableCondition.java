@@ -9,21 +9,21 @@ import util.TypeUtils;
 import java.util.Arrays;
 import java.util.Map;
 
+import static util.FieldType.BOOLEAN;
 import static util.FieldType.NUMBER;
-import static util.FieldType.STRING;
 
 @Data
 public class StressedSyllableCondition extends SyllableCondition {
 	private Integer order;
 	private Integer syllablePosition;
-	private SyllablePositionType syllablePositionType;
+	private Boolean syllablePositionAbsolute;
 	
 	@Builder
-	public StressedSyllableCondition(Integer order, Integer syllablePosition, SyllablePositionType syllablePositionType) {
+	public StressedSyllableCondition(Integer order, Integer syllablePosition, Boolean syllablePositionAbsolute) {
         super(SyllableConditionType.STRESSED);
         this.order = order;
         this.syllablePosition = syllablePosition;
-        this.syllablePositionType = syllablePositionType;
+        this.syllablePositionAbsolute = syllablePositionAbsolute;
     }
 
     public static class StressedSyllableConditionBuilder extends SyllableConditionBuilder {
@@ -33,14 +33,15 @@ public class StressedSyllableCondition extends SyllableCondition {
     }
 
     public static StressedSyllableCondition getFromItem(Map<String, AttributeValue> item, String location) {
+        item.computeIfAbsent("syllablePositionAbsolute", key -> new AttributeValue().withBOOL(false));
         ExceptionUtils.checkObjectElements(
-                Arrays.asList("order", "syllablePosition", "syllablePositionType"),
-                Arrays.asList(NUMBER, NUMBER, STRING),
+                Arrays.asList("order", "syllablePosition", "syllablePositionAbsolute"),
+                Arrays.asList(NUMBER, NUMBER, BOOLEAN),
                 location, item);
 	    return StressedSyllableCondition.builder()
                 .order(TypeUtils.getIntegerFromItem(item.get("order")))
                 .syllablePosition(TypeUtils.getIntegerFromItem(item.get("syllablePosition")))
-                .syllablePositionType(SyllablePositionType.getFromItem(item.get("syllablePositionType")))
+                .syllablePositionAbsolute(TypeUtils.getBooleanFromItem(item.get("syllablePositionAbsolute")))
                 .build();
     }
 }

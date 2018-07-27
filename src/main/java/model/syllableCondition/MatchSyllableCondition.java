@@ -8,20 +8,21 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import lombok.Builder;
 import lombok.Data;
 import util.ExceptionUtils;
+import util.TypeUtils;
 
+import static util.FieldType.BOOLEAN;
 import static util.FieldType.LIST;
-import static util.FieldType.STRING;
 
 @Data
 public class MatchSyllableCondition extends SyllableCondition {
 	private List<SoundPosition> positions;
-	private SyllablePositionType syllablePositionType;
+    private Boolean syllablePositionAbsolute;
 	
 	@Builder
-	public MatchSyllableCondition(List<SoundPosition> positions, SyllablePositionType syllablePositionType) {
+	public MatchSyllableCondition(List<SoundPosition> positions, Boolean syllablePositionAbsolute) {
         super(SyllableConditionType.MATCH);
         this.positions = positions;
-        this.syllablePositionType = syllablePositionType;
+        this.syllablePositionAbsolute = syllablePositionAbsolute;
     }
 
     public static class MatchSyllableConditionBuilder extends SyllableConditionBuilder {
@@ -31,13 +32,14 @@ public class MatchSyllableCondition extends SyllableCondition {
     }
 
     public static MatchSyllableCondition getFromItem(Map<String, AttributeValue> item, String location) {
+        item.computeIfAbsent("syllablePositionAbsolute", key -> new AttributeValue().withBOOL(false));
         ExceptionUtils.checkObjectElements(
-                Arrays.asList("positions", "syllablePositionType"),
-                Arrays.asList(LIST, STRING),
+                Arrays.asList("positions", "syllablePositionAbsolute"),
+                Arrays.asList(LIST, BOOLEAN),
                 location, item);
         return MatchSyllableCondition.builder()
                 .positions(SoundPosition.getListFromItemList(item.get("positions").getL(), location + ": position object"))
-                .syllablePositionType(SyllablePositionType.getFromItem(item.get("syllablePositionType")))
+                .syllablePositionAbsolute(TypeUtils.getBooleanFromItem(item.get("syllablePositionAbsolute")))
                 .build();
     }
 }

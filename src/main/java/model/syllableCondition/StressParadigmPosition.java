@@ -4,7 +4,6 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import lombok.Builder;
 import lombok.Data;
 import util.ExceptionUtils;
-import util.FieldType;
 import util.TypeUtils;
 
 import java.util.Arrays;

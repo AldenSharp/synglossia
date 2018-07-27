@@ -9,19 +9,19 @@ import util.TypeUtils;
 import java.util.Arrays;
 import java.util.Map;
 
+import static util.FieldType.BOOLEAN;
 import static util.FieldType.NUMBER;
-import static util.FieldType.STRING;
 
 @Data
 public class ShortVowelSyllableCondition extends SyllableCondition {
 	private Integer syllablePosition;
-	private SyllablePositionType syllablePositionType;
+    private Boolean syllablePositionAbsolute;
 	
 	@Builder
-	public ShortVowelSyllableCondition(Integer syllablePosition, SyllablePositionType syllablePositionType) {
+	public ShortVowelSyllableCondition(Integer syllablePosition, Boolean syllablePositionAbsolute) {
         super(SyllableConditionType.SHORT_VOWEL);
         this.syllablePosition = syllablePosition;
-        this.syllablePositionType = syllablePositionType;
+        this.syllablePositionAbsolute = syllablePositionAbsolute;
     }
 
     public static class ShortVowelSyllableConditionBuilder extends SyllableConditionBuilder {
@@ -31,13 +31,14 @@ public class ShortVowelSyllableCondition extends SyllableCondition {
     }
 
     public static ShortVowelSyllableCondition getFromItem(Map<String, AttributeValue> item, String location) {
+        item.computeIfAbsent("syllablePositionAbsolute", key -> new AttributeValue().withBOOL(false));
         ExceptionUtils.checkObjectElements(
-                Arrays.asList("syllablePosition", "syllablePositionType"),
-                Arrays.asList(NUMBER, STRING),
+                Arrays.asList("syllablePosition", "syllablePositionAbsolute"),
+                Arrays.asList(NUMBER, BOOLEAN),
                 location, item);
 	    return ShortVowelSyllableCondition.builder()
                 .syllablePosition(TypeUtils.getIntegerFromItem(item.get("syllablePosition")))
-                .syllablePositionType(SyllablePositionType.getFromItem(item.get("syllablePositionType")))
+                .syllablePositionAbsolute(TypeUtils.getBooleanFromItem(item.get("syllablePositionAbsolute")))
                 .build();
     }
 }

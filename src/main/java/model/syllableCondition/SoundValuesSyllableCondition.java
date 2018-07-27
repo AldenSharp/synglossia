@@ -10,22 +10,20 @@ import lombok.Data;
 import util.ExceptionUtils;
 import util.TypeUtils;
 
-import static util.FieldType.LIST;
-import static util.FieldType.OBJECT;
-import static util.FieldType.STRING;
+import static util.FieldType.*;
 
 @Data
 public class SoundValuesSyllableCondition extends SyllableCondition {
 	private SoundPosition position;
 	private List<String> values;
-	private SyllablePositionType syllablePositionType;
+	private Boolean syllablePositionAbsolute;
 	
 	@Builder
-	public SoundValuesSyllableCondition(SoundPosition position, List<String> values, SyllablePositionType syllablePositionType) {
+	public SoundValuesSyllableCondition(SoundPosition position, List<String> values, Boolean syllablePositionAbsolute) {
         super(SyllableConditionType.SOUND_VALUES);
         this.position = position;
         this.values = values;
-        this.syllablePositionType = syllablePositionType;
+        this.syllablePositionAbsolute = syllablePositionAbsolute;
     }
 
     public static class SoundValuesSyllableConditionBuilder extends SyllableConditionBuilder {
@@ -35,14 +33,15 @@ public class SoundValuesSyllableCondition extends SyllableCondition {
     }
 
     public static SoundValuesSyllableCondition getFromItem(Map<String, AttributeValue> item, String location) {
+        item.computeIfAbsent("syllablePositionAbsolute", key -> new AttributeValue().withBOOL(false));
         ExceptionUtils.checkObjectElements(
-                Arrays.asList("position", "values", "syllablePositionType"),
-                Arrays.asList(OBJECT, LIST, STRING),
+                Arrays.asList("position", "values", "syllablePositionAbsolute"),
+                Arrays.asList(OBJECT, LIST, BOOLEAN),
                 location, item);
         return SoundValuesSyllableCondition.builder()
                 .position(SoundPosition.getFromItem(item.get("position").getM(), location + ": position object"))
                 .values(TypeUtils.getStringListFromItemList(item.get("values").getL(), location + ": value item"))
-                .syllablePositionType(SyllablePositionType.getFromItem(item.get("syllablePositionType")))
+                .syllablePositionAbsolute(TypeUtils.getBooleanFromItem(item.get("syllablePositionAbsolute")))
                 .build();
     }
 }

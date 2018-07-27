@@ -4,23 +4,24 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import lombok.Builder;
 import lombok.Data;
 import util.ExceptionUtils;
+import util.TypeUtils;
 
 import java.util.Arrays;
 import java.util.Map;
 
+import static util.FieldType.BOOLEAN;
 import static util.FieldType.OBJECT;
-import static util.FieldType.STRING;
 
 @Data
 public class EmptySyllableCondition extends SyllableCondition {
 	private SoundPosition position;
-	private SyllablePositionType syllablePositionType;
+    private Boolean syllablePositionAbsolute;
 	
 	@Builder
-	public EmptySyllableCondition(SoundPosition position, SyllablePositionType syllablePositionType) {
+	public EmptySyllableCondition(SoundPosition position, Boolean syllablePositionAbsolute) {
         super(SyllableConditionType.EMPTY);
         this.position = position;
-        this.syllablePositionType = syllablePositionType;
+        this.syllablePositionAbsolute = syllablePositionAbsolute;
     }
 
     public static class EmptySyllableConditionBuilder extends SyllableConditionBuilder {
@@ -30,13 +31,14 @@ public class EmptySyllableCondition extends SyllableCondition {
     }
 
     public static EmptySyllableCondition getFromItem(Map<String, AttributeValue> item, String location) {
+        item.computeIfAbsent("syllablePositionAbsolute", key -> new AttributeValue().withBOOL(false));
         ExceptionUtils.checkObjectElements(
-                Arrays.asList("position", "syllablePositionType"),
-                Arrays.asList(OBJECT, STRING),
+                Arrays.asList("position", "syllablePositionAbsolute"),
+                Arrays.asList(OBJECT, BOOLEAN),
                 location, item);
 	    return EmptySyllableCondition.builder()
                 .position(SoundPosition.getFromItem(item.get("position").getM(), location + ": position object"))
-                .syllablePositionType(SyllablePositionType.getFromItem(item.get("syllablePositionType")))
+                .syllablePositionAbsolute(TypeUtils.getBooleanFromItem(item.get("syllablePositionAbsolute")))
                 .build();
     }
 }

@@ -9,19 +9,19 @@ import util.TypeUtils;
 import java.util.Arrays;
 import java.util.Map;
 
+import static util.FieldType.BOOLEAN;
 import static util.FieldType.NUMBER;
-import static util.FieldType.STRING;
 
 @Data
 public class BeforeHiatusSyllableCondition extends SyllableCondition {
 	private Integer syllablePosition;
-	private SyllablePositionType syllablePositionType;
+    private Boolean syllablePositionAbsolute;
 	
 	@Builder
-	public BeforeHiatusSyllableCondition(Integer syllablePosition, SyllablePositionType syllablePositionType) {
+	public BeforeHiatusSyllableCondition(Integer syllablePosition, Boolean syllablePositionAbsolute) {
         super(SyllableConditionType.BEFORE_HIATUS);
         this.syllablePosition = syllablePosition;
-        this.syllablePositionType = syllablePositionType;
+        this.syllablePositionAbsolute = syllablePositionAbsolute;
     }
 
     public static class BeforeHiatusSyllableConditionBuilder extends SyllableConditionBuilder {
@@ -31,13 +31,14 @@ public class BeforeHiatusSyllableCondition extends SyllableCondition {
     }
 
     public static BeforeHiatusSyllableCondition getFromItem(Map<String, AttributeValue> item, String location) {
+        item.computeIfAbsent("syllablePositionAbsolute", key -> new AttributeValue().withBOOL(false));
         ExceptionUtils.checkObjectElements(
-                Arrays.asList("syllablePosition", "syllablePositionType"),
-                Arrays.asList(NUMBER, STRING),
+                Arrays.asList("syllablePosition", "syllablePositionAbsolute"),
+                Arrays.asList(NUMBER, BOOLEAN),
                 location, item);
 	    return BeforeHiatusSyllableCondition.builder()
                 .syllablePosition(TypeUtils.getIntegerFromItem(item.get("syllablePosition")))
-                .syllablePositionType(SyllablePositionType.getFromItem(item.get("syllablePositionType")))
+                .syllablePositionAbsolute(TypeUtils.getBooleanFromItem(item.get("syllablePositionAbsolute")))
                 .build();
     }
 }

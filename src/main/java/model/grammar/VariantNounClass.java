@@ -33,6 +33,7 @@ public class VariantNounClass extends NounClass {
     }
 
     public static VariantNounClass getFromItem(Map<String, AttributeValue> item, String location) {
+        item.computeIfAbsent("condition", key -> SyllableCondition.getDefaultItem());
         ExceptionUtils.checkObjectElements(
                 Arrays.asList("defaultClass", "condition"),
                 Arrays.asList(STRING, OBJECT),

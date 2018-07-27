@@ -32,6 +32,7 @@ public class VariantVerbClass extends VerbClass {
     }
 
     public static VariantVerbClass getFromItem(Map<String, AttributeValue> item, String location) {
+        item.computeIfAbsent("condition", key -> SyllableCondition.getDefaultItem());
         ExceptionUtils.checkObjectElements(
                 Arrays.asList("defaultClass", "condition"),
                 Arrays.asList(STRING, OBJECT),

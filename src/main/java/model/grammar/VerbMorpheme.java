@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static util.FieldType.LIST;
-import static util.FieldType.OBJECT;
 import static util.FieldType.STRING;
 
 @Data

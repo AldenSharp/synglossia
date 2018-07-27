@@ -3,6 +3,7 @@ package model.descendantLanguage;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import model.syllableCondition.SyllableCondition;
 import util.ExceptionUtils;
 
@@ -12,6 +13,7 @@ import java.util.Map;
 import static util.FieldType.OBJECT;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class SoundSwapTransformation extends Transformation {
     private SoundMigration swap;
 
@@ -22,9 +24,7 @@ public class SoundSwapTransformation extends Transformation {
     }
 
     public static class SoundSwapTransformationBuilder extends TransformationBuilder {
-        SoundSwapTransformationBuilder() {
-            super();
-        }
+        SoundSwapTransformationBuilder() { super(); }
     }
 
     public static SoundSwapTransformation getFromItem(Map<String, AttributeValue> item, String location) {

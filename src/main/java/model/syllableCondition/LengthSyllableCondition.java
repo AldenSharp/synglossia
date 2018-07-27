@@ -3,6 +3,7 @@ package model.syllableCondition;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import model.Comparison;
 import util.ExceptionUtils;
 import util.TypeUtils;
@@ -14,7 +15,7 @@ import static util.FieldType.NUMBER;
 import static util.FieldType.STRING;
 
 @Data
-@Builder
+@EqualsAndHashCode(callSuper = true)
 public class LengthSyllableCondition extends SyllableCondition {
     private Integer length;
     private Comparison comparison;
@@ -27,9 +28,7 @@ public class LengthSyllableCondition extends SyllableCondition {
     }
 
     public static class LengthSyllableConditionBuilder extends SyllableConditionBuilder {
-        LengthSyllableConditionBuilder() {
-            super();
-        }
+        LengthSyllableConditionBuilder() { super(); }
     }
 
     public static LengthSyllableCondition getFromItem(Map<String, AttributeValue> item, String location) {

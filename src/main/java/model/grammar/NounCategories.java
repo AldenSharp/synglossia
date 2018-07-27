@@ -3,7 +3,6 @@ package model.grammar;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import lombok.Builder;
 import lombok.Data;
-import model.NominalMorphology;
 import util.ExceptionUtils;
 import util.TypeUtils;
 
@@ -15,7 +14,6 @@ import java.util.stream.Collectors;
 
 import static util.FieldType.LIST;
 import static util.FieldType.OBJECT;
-import static util.FieldType.STRING;
 
 @Data
 @Builder

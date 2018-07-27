@@ -13,13 +13,9 @@ public enum Gender {
     MASCULINE("MASCULINE"), FEMININE("FEMININE"), NEUTER("NEUTER"), COMMON("COMMON");
 
     private final String value;
-    Gender(String value) {
-        this.value = value;
-    }
+    Gender(String value) { this.value = value; }
 
-    public static Gender getFromItem(AttributeValue item) {
-        return valueOf(TypeUtils.getStringFromItem(item));
-    }
+    public static Gender getFromItem(AttributeValue item) { return valueOf(TypeUtils.getStringFromItem(item)); }
 
     public static List<Gender> getListFromItemList(List<AttributeValue> itemList, String location) {
         ExceptionUtils.checkListElements(itemList, location, STRING);

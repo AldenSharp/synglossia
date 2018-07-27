@@ -13,13 +13,9 @@ public enum Tense {
     COMMON("COMMON"), PRESENT("PRESENT"), PAST("PAST"), FUTURE("FUTURE");
 
     private final String value;
-    Tense(String value) {
-        this.value = value;
-    }
+    Tense(String value) { this.value = value; }
 
-    public static Tense getFromItem(AttributeValue item) {
-        return valueOf(TypeUtils.getStringFromItem(item));
-    }
+    public static Tense getFromItem(AttributeValue item) { return valueOf(TypeUtils.getStringFromItem(item)); }
 
     public static List<Tense> getListFromItemList(List<AttributeValue> itemList, String location) {
         ExceptionUtils.checkListElements(itemList, location, STRING);

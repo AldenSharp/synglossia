@@ -7,12 +7,14 @@ import java.util.Map;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import util.ExceptionUtils;
 import util.TypeUtils;
 
 import static util.FieldType.LIST;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class StressUniquenessSyllableCondition extends SyllableCondition {
 	private List<Integer> orders;
 	
@@ -23,9 +25,7 @@ public class StressUniquenessSyllableCondition extends SyllableCondition {
     }
 
     public static class StressUniquenessSyllableConditionBuilder extends SyllableConditionBuilder {
-    	StressUniquenessSyllableConditionBuilder() {
-                super();
-            }
+    	StressUniquenessSyllableConditionBuilder() { super(); }
     }
 
     public static StressUniquenessSyllableCondition getFromItem(Map<String, AttributeValue> item, String location) {

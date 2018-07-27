@@ -3,6 +3,7 @@ package model.condition;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import util.ExceptionUtils;
 
 import java.util.Collections;
@@ -11,6 +12,7 @@ import java.util.Map;
 import static util.FieldType.OBJECT;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class BeforeCondition extends Condition {
 	private AdjacentSound adjacentSound;
 	
@@ -21,9 +23,7 @@ public class BeforeCondition extends Condition {
     }
 
     public static class BeforeConditionBuilder extends ConditionBuilder {
-    	BeforeConditionBuilder() {
-                super();
-            }
+    	BeforeConditionBuilder() { super(); }
     }
 
     public static BeforeCondition getFromItem(Map<String, AttributeValue> item, String location) {

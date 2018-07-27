@@ -3,18 +3,19 @@ package model.grammar;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import model.syllableCondition.SyllableCondition;
 import util.ExceptionUtils;
 import util.TypeUtils;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 import static util.FieldType.OBJECT;
 import static util.FieldType.STRING;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class VariantVerbClass extends VerbClass {
     private String defaultClass;
     private SyllableCondition condition;
@@ -27,9 +28,7 @@ public class VariantVerbClass extends VerbClass {
     }
 
     public static class VariantVerbClassBuilder extends VerbClass.VerbClassBuilder {
-        VariantVerbClassBuilder() {
-            super();
-        }
+        VariantVerbClassBuilder() { super(); }
     }
 
     public static VariantVerbClass getFromItem(Map<String, AttributeValue> item, String location) {

@@ -32,10 +32,10 @@ class WrittenWord {
                 .build();
     }
 
-    static List<WrittenWord> getListFromItemList(List<AttributeValue> itemList, String location) {
-        ExceptionUtils.checkListElements(itemList, location, OBJECT);
+    static List<WrittenWord> getListFromItemList(List<AttributeValue> itemList) {
+        ExceptionUtils.checkListElements(itemList, "Word", OBJECT);
         return itemList.stream()
-                .map(item -> getFromItem(item.getM(), location + " at position " + itemList.indexOf(item)))
+                .map(item -> getFromItem(item.getM(), "Word at position " + itemList.indexOf(item)))
                 .collect(Collectors.toList());
     }
 }

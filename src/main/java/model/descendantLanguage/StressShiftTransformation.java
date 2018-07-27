@@ -1,6 +1,7 @@
 package model.descendantLanguage;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import lombok.EqualsAndHashCode;
 import model.syllableCondition.SyllableCondition;
 import lombok.Builder;
 import lombok.Data;
@@ -13,6 +14,7 @@ import java.util.Map;
 import static util.FieldType.NUMBER;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class StressShiftTransformation extends Transformation {
 	private Integer order;
 	private Integer shift;
@@ -25,9 +27,7 @@ public class StressShiftTransformation extends Transformation {
     }
 
     public static class StressShiftTransformationBuilder extends TransformationBuilder {
-    	StressShiftTransformationBuilder() {
-            super();
-        }
+    	StressShiftTransformationBuilder() { super(); }
     }
 
     public static StressShiftTransformation getFromItem(Map<String, AttributeValue> item, String location) {

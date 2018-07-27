@@ -2,8 +2,10 @@ package model.condition;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class SyllabicCondition extends Condition {
 	
 	@Builder
@@ -12,8 +14,6 @@ public class SyllabicCondition extends Condition {
     }
 
     public static class SyllabicConditionBuilder extends ConditionBuilder {
-    	SyllabicConditionBuilder() {
-                super();
-            }
+    	SyllabicConditionBuilder() { super(); }
     }
 }

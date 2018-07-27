@@ -1,6 +1,7 @@
 package model.condition;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import lombok.EqualsAndHashCode;
 import model.Comparison;
 import lombok.Builder;
 import lombok.Data;
@@ -14,6 +15,7 @@ import static util.FieldType.NUMBER;
 import static util.FieldType.STRING;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class SyllableCountCondition extends Condition {
 	private Comparison comparison;
 	private Integer count;
@@ -26,9 +28,7 @@ public class SyllableCountCondition extends Condition {
     }
 
     public static class SyllableCountConditionBuilder extends ConditionBuilder {
-    	SyllableCountConditionBuilder() {
-                super();
-            }
+    	SyllableCountConditionBuilder() { super(); }
     }
 
     public static SyllableCountCondition getFromItem(Map<String, AttributeValue> item, String location) {

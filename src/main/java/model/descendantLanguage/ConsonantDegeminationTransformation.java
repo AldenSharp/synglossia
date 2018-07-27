@@ -1,6 +1,7 @@
 package model.descendantLanguage;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import lombok.EqualsAndHashCode;
 import model.syllableCondition.SyllableCondition;
 import lombok.Builder;
 import lombok.Data;
@@ -8,6 +9,7 @@ import lombok.Data;
 import java.util.Map;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class ConsonantDegeminationTransformation extends Transformation {
 
 	@Builder
@@ -16,9 +18,7 @@ public class ConsonantDegeminationTransformation extends Transformation {
     }
 
     public static class ConsonantDegeminationTransformationBuilder extends TransformationBuilder {
-    	ConsonantDegeminationTransformationBuilder() {
-            super();
-        }
+    	ConsonantDegeminationTransformationBuilder() { super(); }
     }
 
     public static ConsonantDegeminationTransformation getFromItem(Map<String, AttributeValue> item, String location) {

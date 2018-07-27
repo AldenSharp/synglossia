@@ -30,7 +30,7 @@ public class Word {
         return Word.builder()
                 .partOfSpeech(PartOfSpeech.valueOf(item.get("partOfSpeech").getS()))
                 .spokenForm(SpokenWord.getFromItem(item.get("spokenForm").getM(), "Word"))
-                .writtenForms(WrittenWord.getListFromItemList(item.get("writtenForms").getL(), "Word"))
+                .writtenForms(WrittenWord.getListFromItemList(item.get("writtenForms").getL()))
                 .build();
     }
 }

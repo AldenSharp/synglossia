@@ -1,6 +1,7 @@
 package model.descendantLanguage;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import lombok.EqualsAndHashCode;
 import model.syllableCondition.SyllableCondition;
 import lombok.Builder;
 import lombok.Data;
@@ -14,6 +15,7 @@ import static util.FieldType.BOOLEAN;
 import static util.FieldType.NUMBER;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class SyllableCollapseTransformation extends Transformation {
 	private Integer position;
 	private Boolean reiterate;
@@ -26,9 +28,7 @@ public class SyllableCollapseTransformation extends Transformation {
     }
 
     public static class SyllableCollapseTransformationBuilder extends TransformationBuilder {
-    	SyllableCollapseTransformationBuilder() {
-            super();
-        }
+    	SyllableCollapseTransformationBuilder() { super(); }
     }
 
     public static SyllableCollapseTransformation getFromItem(Map<String, AttributeValue> item, String location) {

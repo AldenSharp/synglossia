@@ -3,6 +3,7 @@ package model.descendantLanguage;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import model.syllableCondition.SyllableCondition;
 import util.ExceptionUtils;
 import util.TypeUtils;
@@ -14,6 +15,7 @@ import static util.FieldType.NUMBER;
 import static util.FieldType.STRING;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class SoundInsertionTransformation extends Transformation {
     private Integer position;
     private String sound;
@@ -26,9 +28,7 @@ public class SoundInsertionTransformation extends Transformation {
     }
 
     public static class SoundInsertionTransformationBuilder extends TransformationBuilder {
-        SoundInsertionTransformationBuilder() {
-            super();
-        }
+        SoundInsertionTransformationBuilder() { super(); }
     }
 
     public static SoundInsertionTransformation getFromItem(Map<String, AttributeValue> item, String location) {

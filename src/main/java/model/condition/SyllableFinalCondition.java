@@ -2,8 +2,10 @@ package model.condition;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class SyllableFinalCondition extends Condition {
 	
 	@Builder
@@ -12,8 +14,6 @@ public class SyllableFinalCondition extends Condition {
     }
 
     public static class SyllableFinalConditionBuilder extends ConditionBuilder {
-    	SyllableFinalConditionBuilder() {
-                super();
-            }
+    	SyllableFinalConditionBuilder() { super(); }
     }
 }

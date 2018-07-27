@@ -2,8 +2,10 @@ package model.condition;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class SyllableInitialCondition extends Condition {
 	
 	@Builder
@@ -12,8 +14,6 @@ public class SyllableInitialCondition extends Condition {
     }
 
     public static class SyllableInitialConditionBuilder extends ConditionBuilder {
-    	SyllableInitialConditionBuilder() {
-                super();
-            }
+    	SyllableInitialConditionBuilder() { super(); }
     }
 }

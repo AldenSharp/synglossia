@@ -7,6 +7,7 @@ import java.util.Map;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import util.ExceptionUtils;
 import util.TypeUtils;
 
@@ -14,6 +15,7 @@ import static util.FieldType.BOOLEAN;
 import static util.FieldType.LIST;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class EmptyAtAllSyllableCondition extends SyllableCondition {
 	private List<SoundPosition> positions;
     private Boolean syllablePositionAbsolute;
@@ -26,9 +28,7 @@ public class EmptyAtAllSyllableCondition extends SyllableCondition {
     }
 
     public static class EmptyAtAllSyllableConditionBuilder extends SyllableConditionBuilder {
-    	EmptyAtAllSyllableConditionBuilder() {
-                super();
-            }
+    	EmptyAtAllSyllableConditionBuilder() { super(); }
     }
 
     public static EmptyAtAllSyllableCondition getFromItem(Map<String, AttributeValue> item, String location) {

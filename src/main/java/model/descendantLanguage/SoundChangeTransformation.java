@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import lombok.EqualsAndHashCode;
 import model.syllableCondition.SyllableCondition;
 import lombok.Builder;
 import lombok.Data;
@@ -14,6 +15,7 @@ import util.TypeUtils;
 import static util.FieldType.LIST;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class SoundChangeTransformation extends Transformation {
 	private List<Integer> positions;
 	private List<SoundChange> changes;
@@ -26,9 +28,7 @@ public class SoundChangeTransformation extends Transformation {
     }
 
     public static class SoundChangeTransformationBuilder extends TransformationBuilder {
-    	SoundChangeTransformationBuilder() {
-            super();
-        }
+    	SoundChangeTransformationBuilder() { super(); }
     }
 
     public static SoundChangeTransformation getFromItem(Map<String, AttributeValue> item, String location) {

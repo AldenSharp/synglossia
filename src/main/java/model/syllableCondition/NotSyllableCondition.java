@@ -3,6 +3,7 @@ package model.syllableCondition;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import util.ExceptionUtils;
 
 import java.util.Collections;
@@ -11,6 +12,7 @@ import java.util.Map;
 import static util.FieldType.OBJECT;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class NotSyllableCondition extends SyllableCondition {
 	private SyllableCondition condition;
 	
@@ -21,9 +23,7 @@ public class NotSyllableCondition extends SyllableCondition {
     }
 
     public static class NotSyllableConditionBuilder extends SyllableConditionBuilder {
-    	NotSyllableConditionBuilder() {
-                super();
-            }
+    	NotSyllableConditionBuilder() { super(); }
     }
 
     public static NotSyllableCondition getFromItem(Map<String, AttributeValue> item, String location) {

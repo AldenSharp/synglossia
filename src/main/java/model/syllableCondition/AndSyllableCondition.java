@@ -7,11 +7,13 @@ import java.util.Map;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import util.ExceptionUtils;
 
 import static util.FieldType.LIST;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class AndSyllableCondition extends SyllableCondition {
 	private List<SyllableCondition> conditions;
 	
@@ -22,9 +24,7 @@ public class AndSyllableCondition extends SyllableCondition {
     }
 
     public static class AndSyllableConditionBuilder extends SyllableConditionBuilder {
-    	AndSyllableConditionBuilder() {
-                super();
-            }
+    	AndSyllableConditionBuilder() { super(); }
     }
 
     public static AndSyllableCondition getFromItem(Map<String, AttributeValue> item, String location) {

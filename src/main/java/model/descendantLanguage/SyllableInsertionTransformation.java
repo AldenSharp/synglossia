@@ -3,6 +3,7 @@ package model.descendantLanguage;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import model.syllableCondition.SyllableCondition;
 import util.ExceptionUtils;
 import util.TypeUtils;
@@ -14,6 +15,7 @@ import java.util.Map;
 import static util.FieldType.LIST;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class SyllableInsertionTransformation extends Transformation {
     private List<String> phonemes;
 
@@ -24,9 +26,7 @@ public class SyllableInsertionTransformation extends Transformation {
     }
 
     public static class SyllableInsertionTransformationBuilder extends TransformationBuilder {
-        SyllableInsertionTransformationBuilder() {
-            super();
-        }
+        SyllableInsertionTransformationBuilder() { super(); }
     }
 
     public static SyllableInsertionTransformation getFromItem(Map<String, AttributeValue> item, String location) {

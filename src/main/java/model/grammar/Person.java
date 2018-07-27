@@ -13,13 +13,9 @@ public enum Person {
     FIRST("FIRST"), SECOND("SECOND"), THIRD("THIRD");
 
     private final String value;
-    Person(String value) {
-        this.value = value;
-    }
+    Person(String value) { this.value = value; }
 
-    public static Person getFromItem(AttributeValue item) {
-        return valueOf(TypeUtils.getStringFromItem(item));
-    }
+    public static Person getFromItem(AttributeValue item) { return valueOf(TypeUtils.getStringFromItem(item)); }
 
     public static List<Person> getListFromItemList(List<AttributeValue> itemList, String location) {
         ExceptionUtils.checkListElements(itemList, location, STRING);

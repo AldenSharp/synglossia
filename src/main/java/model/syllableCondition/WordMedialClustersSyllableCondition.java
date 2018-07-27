@@ -7,12 +7,14 @@ import java.util.Map;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import util.ExceptionUtils;
 import util.TypeUtils;
 
 import static util.FieldType.*;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class WordMedialClustersSyllableCondition extends SyllableCondition {
 	private Integer syllablePosition;
 	private List<List<String>> values;
@@ -27,9 +29,7 @@ public class WordMedialClustersSyllableCondition extends SyllableCondition {
     }
 
     public static class WordMedialClustersSyllableConditionBuilder extends SyllableConditionBuilder {
-    	WordMedialClustersSyllableConditionBuilder() {
-                super();
-            }
+    	WordMedialClustersSyllableConditionBuilder() { super(); }
     }
 
     public static WordMedialClustersSyllableCondition getFromItem(Map<String, AttributeValue> item, String location) {

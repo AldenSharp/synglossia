@@ -3,6 +3,7 @@ package model.syllableCondition;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import util.ExceptionUtils;
 import util.TypeUtils;
 
@@ -13,6 +14,7 @@ import static util.FieldType.BOOLEAN;
 import static util.FieldType.NUMBER;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class ShortVowelSyllableCondition extends SyllableCondition {
 	private Integer syllablePosition;
     private Boolean syllablePositionAbsolute;
@@ -25,9 +27,7 @@ public class ShortVowelSyllableCondition extends SyllableCondition {
     }
 
     public static class ShortVowelSyllableConditionBuilder extends SyllableConditionBuilder {
-    	ShortVowelSyllableConditionBuilder() {
-                super();
-            }
+    	ShortVowelSyllableConditionBuilder() { super(); }
     }
 
     public static ShortVowelSyllableCondition getFromItem(Map<String, AttributeValue> item, String location) {

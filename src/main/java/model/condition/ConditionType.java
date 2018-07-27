@@ -21,11 +21,7 @@ public enum ConditionType {
 	SYLLABLE_COUNT("syllable count");
 	
 	private final String value;
-	ConditionType(String value) {
-		this.value = value;
-	}
+	ConditionType(String value) { this.value = value; }
 
-	public static ConditionType getFromItem(AttributeValue item) {
-	    return valueOf(TypeUtils.getStringFromItem(item));
-    }
+	public static ConditionType getFromItem(AttributeValue item) { return valueOf(TypeUtils.getStringFromItem(item)); }
 }

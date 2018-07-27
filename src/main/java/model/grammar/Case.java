@@ -20,13 +20,9 @@ public enum Case {
     INSTRUMENTAL("INSTRUMENTAL");
 
     private final String value;
-    Case(String value) {
-        this.value = value;
-    }
+    Case(String value) { this.value = value; }
 
-    public static Case getFromItem(AttributeValue item) {
-        return valueOf(TypeUtils.getStringFromItem(item));
-    }
+    public static Case getFromItem(AttributeValue item) { return valueOf(TypeUtils.getStringFromItem(item)); }
 
     public static List<Case> getListFromItemList(List<AttributeValue> itemList, String location) {
         ExceptionUtils.checkListElements(itemList, location, STRING);

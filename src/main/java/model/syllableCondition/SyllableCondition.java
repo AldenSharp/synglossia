@@ -41,6 +41,10 @@ public class SyllableCondition {
                 return SyllableInitialClustersSyllableCondition.getFromItem(item, locationWithType);
             case SYLLABLE_FINAL_CLUSTERS:
                 return SyllableFinalClustersSyllableCondition.getFromItem(item, locationWithType);
+            case BEFORE:
+                return BeforeSyllableCondition.getFromItem(item, locationWithType);
+            case AFTER:
+                return AfterSyllableCondition.getFromItem(item, locationWithType);
             case SOUND_VALUES:
                 return SoundValuesSyllableCondition.getFromItem(item, locationWithType);
             case EMPTY:

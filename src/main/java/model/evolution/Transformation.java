@@ -1,4 +1,4 @@
-package model.descendantLanguage;
+package model.evolution;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import model.syllableCondition.SyllableCondition;
@@ -48,6 +48,10 @@ public class Transformation {
                 return SyllableInsertionTransformation.getFromItem(item, locationWithType);
             case STRESS_SHIFT:
                 return StressShiftTransformation.getFromItem(item, locationWithType);
+            case SYLLABLE_POSITION_INSERTION:
+                return SyllablePositionInsertionTransformation.getFromItem(item, locationWithType);
+            case SYLLABLE_POSITION_DELETION:
+                return SyllablePositionDeletionTransformation.getFromItem(item, locationWithType);
         }
         return Transformation.builder().build();
     }

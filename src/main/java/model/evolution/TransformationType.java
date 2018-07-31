@@ -1,4 +1,4 @@
-package model.descendantLanguage;
+package model.evolution;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import util.TypeUtils;
@@ -13,7 +13,9 @@ public enum TransformationType {
     CONSONANT_DEGEMINATION("CONSONANT_DEGEMINATION"),
     SYLLABLE_COLLAPSE("SYLLABLE_COLLAPSE"),
     SYLLABLE_INSERTION("SYLLABLE_INSERTION"),
-    STRESS_SHIFT("STRESS_SHIFT");
+    STRESS_SHIFT("STRESS_SHIFT"),
+    SYLLABLE_POSITION_INSERTION("SYLLABLE_POSITION_INSERTION"),
+    SYLLABLE_POSITION_DELETION("SYLLABLE_POSITION_DELETION");
 
     private final String value;
     TransformationType(String value) { this.value = value; }

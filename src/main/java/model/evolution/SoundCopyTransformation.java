@@ -1,4 +1,4 @@
-package model.descendantLanguage;
+package model.evolution;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,27 +17,27 @@ import static util.FieldType.LIST;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SoundMigrationTransformation extends Transformation {
+public class SoundCopyTransformation extends Transformation {
 	private List<SoundMigration> migrations;
 	private Boolean overwrite;
 	
 	@Builder
-	public SoundMigrationTransformation(SyllableCondition condition, List<SoundMigration> migrations, Boolean overwrite) {
-        super(TransformationType.SOUND_MIGRATION, condition);
+	public SoundCopyTransformation(SyllableCondition condition, List<SoundMigration> migrations, Boolean overwrite) {
+        super(TransformationType.SOUND_COPY, condition);
         this.migrations = migrations;
         this.overwrite = overwrite;
     }
 
-    public static class SoundMigrationTransformationBuilder extends TransformationBuilder {
-    	SoundMigrationTransformationBuilder() { super(); }
+    public static class SoundCopyTransformationBuilder extends TransformationBuilder {
+    	SoundCopyTransformationBuilder() { super(); }
     }
 
-    public static SoundMigrationTransformation getFromItem(Map<String, AttributeValue> item, String location) {
+    public static SoundCopyTransformation getFromItem(Map<String, AttributeValue> item, String location) {
         ExceptionUtils.checkObjectElements(
                 Arrays.asList("migrations", "overwrite"),
                 Arrays.asList(LIST, BOOLEAN),
                 location, item);
-	    return SoundMigrationTransformation.builder()
+	    return SoundCopyTransformation.builder()
                 .migrations(SoundMigration.getListFromItemList(item.get("migrations").getL(), location + ": sound migration object"))
                 .overwrite(TypeUtils.getBooleanFromItem(item.get("overwrite")))
                 .condition(SyllableCondition.getFromItem(item.get("condition").getM(), location + ": syllable condition"))

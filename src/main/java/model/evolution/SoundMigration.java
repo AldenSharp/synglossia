@@ -1,4 +1,4 @@
-package model.descendantLanguage;
+package model.evolution;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import lombok.Builder;

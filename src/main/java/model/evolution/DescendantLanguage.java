@@ -1,4 +1,4 @@
-package model.descendantLanguage;
+package model.evolution;
 
 import java.util.Arrays;
 import java.util.List;

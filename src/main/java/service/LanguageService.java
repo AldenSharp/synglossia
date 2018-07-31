@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import model.Syngloss;
-import model.descendantLanguage.*;
+import model.evolution.*;
 import model.writingSystem.WritingSystem;
 
 public class LanguageService {

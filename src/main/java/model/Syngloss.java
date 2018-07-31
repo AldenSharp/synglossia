@@ -7,7 +7,7 @@ import java.util.Map;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import lombok.Builder;
 import lombok.Data;
-import model.descendantLanguage.DescendantLanguage;
+import model.evolution.DescendantLanguage;
 import model.syllableCondition.SyllableCondition;
 import model.writingSystem.WritingSystem;
 import util.ExceptionUtils;

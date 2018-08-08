@@ -33,6 +33,8 @@ public class StressedSyllableCondition extends SyllableCondition {
     }
 
     public static StressedSyllableCondition getFromItem(Map<String, AttributeValue> item, String location) {
+        item.computeIfAbsent("order", key -> new AttributeValue().withN("1"));
+        item.computeIfAbsent("syllablePosition", key -> new AttributeValue().withN("0"));
         item.computeIfAbsent("syllablePositionAbsolute", key -> new AttributeValue().withBOOL(false));
         ExceptionUtils.checkObjectElements(
                 Arrays.asList("order", "syllablePosition", "syllablePositionAbsolute"),

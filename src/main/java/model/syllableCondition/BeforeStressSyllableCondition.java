@@ -28,6 +28,7 @@ public class BeforeStressSyllableCondition extends SyllableCondition {
     }
 
     public static BeforeStressSyllableCondition getFromItem(Map<String, AttributeValue> item, String location) {
+        item.computeIfAbsent("order", key -> new AttributeValue().withN("1"));
         ExceptionUtils.checkObjectElements(Collections.singletonList("order"), Collections.singletonList(NUMBER), location, item);
         return BeforeStressSyllableCondition.builder()
                 .order(TypeUtils.getIntegerFromItem(item.get("order")))

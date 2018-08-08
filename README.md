@@ -220,13 +220,13 @@ It is not recommended to use `SYLLABLE_INITIAL_CLUSTERS` and `SYLLABLE_FINAL_CLU
 Required fields:
 
 ```
-syllablePosition: <int>
 values: [[<phoneme string>]]
 ```
 
 Optional fields with their defaults:
 
 ```
+syllablePosition: 0
 syllablePositionAbsolute: false
 ```
 
@@ -259,13 +259,13 @@ It is not recommended to use `SYLLABLE_INITIAL_CLUSTERS` and `SYLLABLE_FINAL_CLU
 Required fields:
 
 ```
-syllablePosition: <int>
 values: [[<phoneme string>]]
 ```
 
 Optional fields with their defaults:
 
 ```
+syllablePosition: 0
 syllablePositionAbsolute: false
 ```
 
@@ -278,13 +278,13 @@ It is not recommended to use `SYLLABLE_INITIAL_CLUSTERS` and `SYLLABLE_FINAL_CLU
 Required fields:
 
 ```
-syllablePosition: <int>
 values: [[<phoneme string>]]
 ```
 
 Optional fields with their defaults:
 
 ```
+syllablePosition: 0
 syllablePositionAbsolute: false
 ```
 
@@ -395,15 +395,12 @@ syllablePositionAbsolute: false
 
 Every coda consonant position in the syllable has zero sound value.
 
-Required fields:
-
-```
-syllablePosition: <int>
-```
+There are no required fields.
 
 Optional fields with their defaults:
 
 ```
+syllablePosition: 0
 syllablePositionAbsolute: false
 ```
 
@@ -413,15 +410,12 @@ Every consonant position between this syllable's core and the next syllable's co
 
 If the syllable is final, then this condition returns false.
 
-Required fields:
-
-```
-syllablePosition: <int>
-```
+There are no required fields.
 
 Optional fields with their defaults:
 
 ```
+syllablePosition: 0
 syllablePositionAbsolute: false
 ```
 
@@ -441,15 +435,12 @@ position: <int>
 
 Vowel of the syllable is short.
 
-Required fields:
-
-```
-syllablePosition: <int>
-```
+There are no required fields.
 
 Optional fields with their defaults:
 
 ```
+syllablePosition: 0
 syllablePositionAbsolute: false
 ```
 
@@ -457,15 +448,12 @@ syllablePositionAbsolute: false
 
 Vowel of the syllable is long.
 
-Required fields:
-
-```
-syllablePosition: <int>
-```
+There are no required fields.
 
 Optional fields with their defaults:
 
 ```
+syllablePosition: 0
 syllablePositionAbsolute: false
 ```
 

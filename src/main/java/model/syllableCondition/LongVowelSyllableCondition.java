@@ -31,6 +31,7 @@ public class LongVowelSyllableCondition extends SyllableCondition {
     }
 
     public static LongVowelSyllableCondition getFromItem(Map<String, AttributeValue> item, String location) {
+        item.computeIfAbsent("syllablePosition", key -> new AttributeValue().withN("0"));
         item.computeIfAbsent("syllablePositionAbsolute", key -> new AttributeValue().withBOOL(false));
         ExceptionUtils.checkObjectElements(
                 Arrays.asList("syllablePosition", "syllablePositionAbsolute"),

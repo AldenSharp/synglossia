@@ -23,7 +23,7 @@ public class AfterSyllableCondition extends SyllableCondition {
 
     @Builder
     public AfterSyllableCondition(SoundPosition position, AdjacentSound adjacentSound, Boolean syllablePositionAbsolute) {
-        super(SyllableConditionType.BEFORE);
+        super(SyllableConditionType.AFTER);
         this.position = position;
         this.adjacentSound = adjacentSound;
         this.syllablePositionAbsolute = syllablePositionAbsolute;

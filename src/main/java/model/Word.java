@@ -6,6 +6,7 @@ import lombok.Data;
 import model.grammar.PartOfSpeech;
 import util.ExceptionUtils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,7 @@ public class Word {
     private List<WrittenWord> writtenForms;
 
     public static Word getFromItem(Map<String, AttributeValue> item) {
+        item.computeIfAbsent("writtenForms", key -> new AttributeValue().withL(new ArrayList<>()));
         ExceptionUtils.checkObjectElements(
                 Arrays.asList("partOfSpeech", "spokenForm", "writtenForms"),
                 Arrays.asList(STRING, OBJECT, LIST),

@@ -21,7 +21,7 @@ class Syllable {
     private Integer accent;
     private List<String> phonemes;
 
-    private static Syllable getFromItem(Map<String, AttributeValue> item, String location) {
+    static Syllable getFromItem(Map<String, AttributeValue> item, String location) {
             item.computeIfAbsent("accent", key -> new AttributeValue().withN("0"));
             ExceptionUtils.checkObjectElements(
                     Arrays.asList("accent", "phonemes"),
@@ -34,10 +34,10 @@ class Syllable {
                     .build();
         }
 
-        static List<Syllable> getListFromItemList(List<AttributeValue> itemList, String location) {
-            ExceptionUtils.checkListElements(itemList, location, OBJECT);
-            return itemList.stream()
-                    .map(item -> getFromItem(item.getM(), location + " at position " + itemList.indexOf(item)))
-                    .collect(Collectors.toList());
+    static List<Syllable> getListFromItemList(List<AttributeValue> itemList, String location) {
+        ExceptionUtils.checkListElements(itemList, location, OBJECT);
+        return itemList.stream()
+                .map(item -> getFromItem(item.getM(), location + " at position " + itemList.indexOf(item)))
+                .collect(Collectors.toList());
     }
 }

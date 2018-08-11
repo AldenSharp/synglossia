@@ -33,6 +33,7 @@ public class SoundMigrationTransformation extends Transformation {
     }
 
     public static SoundMigrationTransformation getFromItem(Map<String, AttributeValue> item, String location) {
+        item.computeIfAbsent("overwrite", key -> new AttributeValue().withBOOL(false));
         ExceptionUtils.checkObjectElements(
                 Arrays.asList("migrations", "overwrite"),
                 Arrays.asList(LIST, BOOLEAN),

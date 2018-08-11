@@ -32,6 +32,7 @@ public class SyllableCollapseTransformation extends Transformation {
     }
 
     public static SyllableCollapseTransformation getFromItem(Map<String, AttributeValue> item, String location) {
+        item.computeIfAbsent("reiterate", key -> new AttributeValue().withBOOL(false));
         ExceptionUtils.checkObjectElements(
                 Arrays.asList("position", "reiterate"),
                 Arrays.asList(NUMBER, BOOLEAN),

@@ -17,16 +17,17 @@ import static util.FieldType.OBJECT;
 @Data
 @Builder
 public class SoundMigration {
-	private Integer fromPosition;
-	private Integer syllableShift;
-	private Integer toPosition;
+    private Integer fromPosition;
+    private Integer syllableShift;
+    private Integer toPosition;
 
-	public static SoundMigration getFromItem(Map<String, AttributeValue> item, String location) {
+    public static SoundMigration getFromItem(Map<String, AttributeValue> item, String location) {
+        item.computeIfAbsent("syllableShift", key -> new AttributeValue().withN("0"));
         ExceptionUtils.checkObjectElements(
                 Arrays.asList("fromPosition", "syllableShift", "toPosition"),
                 Arrays.asList(NUMBER, NUMBER, NUMBER),
                 location, item);
-	    return SoundMigration.builder()
+        return SoundMigration.builder()
                 .fromPosition(TypeUtils.getIntegerFromItem(item.get("fromPosition")))
                 .syllableShift(TypeUtils.getIntegerFromItem(item.get("syllableShift")))
                 .toPosition(TypeUtils.getIntegerFromItem(item.get("toPosition")))
@@ -34,8 +35,8 @@ public class SoundMigration {
     }
 
     public static List<SoundMigration> getListFromItemList(List<AttributeValue> itemList, String location) {
-		ExceptionUtils.checkListElements(itemList, location, OBJECT);
-	    return itemList.stream()
+        ExceptionUtils.checkListElements(itemList, location, OBJECT);
+        return itemList.stream()
                 .map(item -> getFromItem(item.getM(), location + " at position " + itemList.indexOf(item)))
                 .collect(Collectors.toList());
     }

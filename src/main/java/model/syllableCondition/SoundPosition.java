@@ -21,6 +21,7 @@ public class SoundPosition {
 	private Integer sound;
 
 	public static SoundPosition getFromItem(Map<String, AttributeValue> item, String location) {
+        item.computeIfAbsent("syllable", key -> new AttributeValue().withN("0"));
         ExceptionUtils.checkObjectElements(
                 Arrays.asList("syllable", "sound"),
                 Arrays.asList(NUMBER, NUMBER),

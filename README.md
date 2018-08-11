@@ -83,22 +83,22 @@ conditions: [<condition>]
 
 #### BEFORE
 
-The current position is immediately before a certain phoneme in the `values` list.
+The current position is immediately before a certain phoneme in the `adjacentSound.values` list.
 
 Required fields:
 
 ```
-adjacentSound: { type: 'CONSONANT' / 'VOWEL' / 'ANY', values: [<phoneme string>] }
+adjacentSound: <adjacent sound>
 ```
 
 #### AFTER
 
-The current position is immediately after a certain phoneme in the `values` list.
+The current position is immediately after a certain phoneme in the `adjacentSound.values` list.
 
 Required fields:
 
 ```
-adjacentSound: { type: 'CONSONANT' / 'VOWEL' / 'ANY', values: [<phoneme string>] }
+adjacentSound: <adjacent sound>
 ```
 
 #### CONSONANTAL
@@ -295,8 +295,8 @@ The current position is immediately before a certain phoneme in the `adjacentSou
 Required fields:
 
 ```
-position: { syllable: <int>, sound: <int> }
-adjacentSound: { type: 'CONSONANT' / 'VOWEL' / 'ANY', values: [<phoneme string>] }
+position: <position>
+adjacentSound: <adjacent sount>
 ```
 
 Optional fields with their defaults:
@@ -312,8 +312,8 @@ The current position is immediately after a certain phoneme in the `adjacentSoun
 Required fields:
 
 ```
-position: { syllable: <int>, sound: <int> }
-adjacentSound: { type: 'CONSONANT' / 'VOWEL' / 'ANY', values: [<phoneme string>] }
+position: <position>
+adjacentSound: <adjacent sound>
 ```
 
 Optional fields with their defaults:
@@ -329,7 +329,7 @@ Phoneme sound value at the position in the syllable is some value in the `values
 Required fields:
 
 ```
-position: { syllable: <int>, sound: <int> }
+position: <position>
 values: [<phoneme string>]
 ```
 
@@ -346,7 +346,7 @@ Phoneme sound value at this position in the syllable is empty.
 Required fields:
 
 ```
-position: { syllable: <int>, sound: <int> }
+position: <position>
 ```
 
 Optional fields with their defaults:
@@ -364,7 +364,7 @@ If the `positions` list is singleton, then it is recommended to use `EMPTY` inst
 Required fields:
 
 ```
-positions: [{ syllable: <int>, sound: <int> }]
+positions: [<position>]
 ```
 
 Optional fields with their defaults:
@@ -382,7 +382,7 @@ If the `positions` list is singleton, then it is recommended to use `EMPTY` inst
 Required fields:
 
 ```
-positions: [{ syllable: <int>, sound: <int> }]
+positions: [<position>]
 ```
 
 Optional fields with their defaults:
@@ -464,7 +464,7 @@ Phoneme sound value at these positions are all equal to each other.
 Required fields:
 
 ```
-positions: [{ syllable: <int>, sound: <int> }]
+positions: [<position>]
 ```
 
 Optional fields with their defaults:
@@ -480,7 +480,7 @@ A certain string starting at the `initialPosition` value (inclusive) is the `arr
 Required fields:
 
 ```
-initialPosition: { syllable: <int>, sound: <int> }
+initialPosition: <position>
 array: [<phoneme strings>]
 ```
 
@@ -566,10 +566,12 @@ This syllable condition is used to create an instantaneous composite transformat
 
 The evolution step to which this syllable condition applies is performed `syllableShift` integer value of syllables away from the previous evolution step. 
 
-Required fields:
+There are no required fields.
+
+Optional fields with their defaults:
 
 ```
-syllableShift: <int>
+syllableShift: 0
 ```
 
 Transformations
@@ -640,13 +642,13 @@ If the target position is out of bounds, then the migration does not happen.
 Required fields:
 
 ```
-migrations: [{ fromPosition: <int>, syllableShift: <int>, toPosition: <int> }]
-overwrite: <Boolean>
+migrations: [<sound migration>]
 ```
 
 Optional fields with their defaults:
 
 ```
+overwrite: false
 condition: { type: DEFAULT }
 ```
 
@@ -660,13 +662,13 @@ If the target position is out of bounds, then the migration does not happen.
 Required fields:
 
 ```
-migrations: [{ fromPosition: <int>, syllableShift: <int>, toPosition: <int> }]
-overwrite: <Boolean>
+migrations: [<sound migration>]
 ```
 
 Optional fields with their defaults:
 
 ```
+overwrite: false
 condition: { type: DEFAULT }
 ```
 
@@ -708,12 +710,12 @@ Required fields:
 
 ```
 position: <int>
-reiterate: <Boolean>
 ```
 
 Optional fields with their defaults:
 
 ```
+reiterate: false
 condition: { type: DEFAULT }
 ```
 
@@ -776,4 +778,50 @@ Required fields:
 
 ```
 position: <int>
+```
+
+Miscellaneous classes
+-
+
+#### \<position>
+
+Required fields:
+
+```
+sound: <int>
+```
+
+Optional fields with their defaults:
+
+```
+syllable: 0
+```
+
+#### \<sound migration>
+
+Required fields:
+
+```
+fromPosition: <int>
+toPosition: <int>
+```
+
+Optional fields with their defaults:
+
+```
+syllableShift: 0
+```
+
+#### \<adjacent sound>
+
+Required fields:
+
+```
+values: [<phoneme string>]
+```
+
+Optional fields with their defaults:
+
+```
+possiblySyllabic: true
 ```

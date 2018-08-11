@@ -28,6 +28,7 @@ public class FollowsFromLastStepSyllableCondition extends SyllableCondition {
     }
 
     public static FollowsFromLastStepSyllableCondition getFromItem(Map<String, AttributeValue> item, String location) {
+        item.computeIfAbsent("syllableShift", key -> new AttributeValue().withN("0"));
         ExceptionUtils.checkObjectElements(Collections.singletonList("syllableShift"), Collections.singletonList(NUMBER), location, item);
 	    return FollowsFromLastStepSyllableCondition.builder()
                 .syllableShift(TypeUtils.getIntegerFromItem(item.get("syllableShift")))

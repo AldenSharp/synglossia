@@ -27,13 +27,13 @@ class DynamoDBService {
         ).getItems();
     }
 
-    Map<String, AttributeValue> getParentLanguage(String name) throws IOException {
+    Map<String, AttributeValue> getLanguage(String name, String type) throws IOException {
         Map<String, String> nameMap = new HashMap<>();
         nameMap.put("#name", "name");
         nameMap.put("#type", "type");
         Map<String, AttributeValue> valueMap = new HashMap<>();
         valueMap.put(":name", new AttributeValue(name));
-        valueMap.put(":type", new AttributeValue("PARENT"));
+        valueMap.put(":type", new AttributeValue(type));
         List<Map<String, AttributeValue>> items = dynamoDB().query(new QueryRequest()
                 .withTableName("Language")
                 .withKeyConditionExpression("#name = :name")
@@ -42,23 +42,20 @@ class DynamoDBService {
                 .withExpressionAttributeValues(valueMap)
         ).getItems();
         if (items.isEmpty()) {
-            throw new IOException("Parent language '" + name + "' is not found in the database.");
+            throw new IOException("Language '" + name + "' of type '" + type + "' is not found in the database.");
         }
         return items.get(0);
     }
 
-    List<Map<String, AttributeValue>> getDescendantLanguages(String parentLanguage) {
+    List<Map<String, AttributeValue>> getEvolutions(String parentLanguage) {
         Map<String, String> nameMap = new HashMap<>();
         nameMap.put("#parentLanguage", "parentLanguage");
-        nameMap.put("#type", "type");
         Map<String, AttributeValue> valueMap = new HashMap<>();
         valueMap.put(":parentLanguage", new AttributeValue(parentLanguage));
-        valueMap.put(":type", new AttributeValue("DESCENDANT"));
         return dynamoDB().query(new QueryRequest()
-                .withTableName("Language")
+                .withTableName("Evolution")
                 .withIndexName("parentLanguage-index")
                 .withKeyConditionExpression("#parentLanguage = :parentLanguage")
-                .withFilterExpression("#type = :type")
                 .withExpressionAttributeNames(nameMap)
                 .withExpressionAttributeValues(valueMap)
         ).getItems();

@@ -11,7 +11,6 @@ import service.LanguageService;
 import util.ExceptionUtils;
 import util.TypeUtils;
 
-import static util.FieldType.LIST;
 import static util.FieldType.NUMBER;
 import static util.FieldType.STRING;
 
@@ -23,16 +22,15 @@ public class DescendantLanguage {
     private List<EvolutionStep> evolution;
     private List<DescendantLanguage> descendantLanguages;
 
-    public static DescendantLanguage getFromItem(Map<String, AttributeValue> item) {
+    public static DescendantLanguage getFromItemAndEvolution(Map<String, AttributeValue> item, Evolution evolution) {
         ExceptionUtils.checkObjectElements(
-                Arrays.asList("name", "date", "evolution"),
-                Arrays.asList(STRING, NUMBER, LIST),
+                Arrays.asList("name", "date"),
+                Arrays.asList(STRING, NUMBER),
                 "Descendant language", item);
-        String locationWithName = "Descendant language '" + item.get("name").getS() + "'";
         return DescendantLanguage.builder()
                 .name(TypeUtils.getStringFromItem(item.get("name")))
                 .date(TypeUtils.getIntegerFromItem(item.get("date")))
-                .evolution(EvolutionStep.getListFromItemList(item.get("evolution").getL(), locationWithName + " evolution step"))
+                .evolution(evolution.getEvolution())
                 .descendantLanguages(getRecursiveDescendantLanguages(TypeUtils.getStringFromItem(item.get("name"))))
                 .build();
     }

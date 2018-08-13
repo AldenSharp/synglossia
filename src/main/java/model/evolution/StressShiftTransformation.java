@@ -11,6 +11,7 @@ import util.TypeUtils;
 import java.util.Arrays;
 import java.util.Map;
 
+import static util.FieldType.BOOLEAN;
 import static util.FieldType.NUMBER;
 
 @Data
@@ -18,6 +19,7 @@ import static util.FieldType.NUMBER;
 public class StressShiftTransformation extends Transformation {
 	private Integer order;
 	private Integer shift;
+	private Boolean syllablePositionAbsolute;
 	
 	@Builder
 	public StressShiftTransformation(SyllableCondition condition, Integer order, Integer shift) {
@@ -31,9 +33,10 @@ public class StressShiftTransformation extends Transformation {
     }
 
     public static StressShiftTransformation getFromItem(Map<String, AttributeValue> item, String location) {
+        item.computeIfAbsent("syllablePositionAbsolute", key -> new AttributeValue().withBOOL(false));
         ExceptionUtils.checkObjectElements(
-                Arrays.asList("order", "shift"),
-                Arrays.asList(NUMBER, NUMBER),
+                Arrays.asList("order", "shift", "syllablePositionAbsolute"),
+                Arrays.asList(NUMBER, NUMBER, BOOLEAN),
                 location, item);
 	    return StressShiftTransformation.builder()
                 .order(TypeUtils.getIntegerFromItem(item.get("order")))

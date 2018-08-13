@@ -739,6 +739,11 @@ condition: { type: DEFAULT }
 
 The stress of `order` value at the current syllable is moved `shift` value.
 
+If `syllablePositionAbsolute` is set to `true`, then `shift` value is an absolute value rather than a relative one.
+
+If `syllablePositionAbsolute` is `true`, then the index wraps Python style.
+If it is false, then the index stops at word boundaries. 
+
 Required fields:
 
 ```
@@ -749,6 +754,7 @@ shift: <int>
 Optional fields with their defaults:
 
 ```
+syllablePositionAbsolute: false
 condition: { type: DEFAULT }
 ```
 

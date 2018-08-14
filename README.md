@@ -762,6 +762,8 @@ condition: { type: DEFAULT }
 
 Insert a new syllable position at the specified position, and shift all farther positions away from the vowel core.
 
+If `syllableCore` is true, then this new position becomes the core of a new semisyllable.
+
 The position value cannot be 0. But it can be one unit past the current extremities.
 
 This transformation cannot take a condition; it always applies categorically.
@@ -772,11 +774,20 @@ Required fields:
 position: <int>
 ```
 
+Optional fields with their defaults:
+
+```
+syllableCore: false
+```
+
 #### SYLLABLE_POSITION_DELETION
 
 Delete the syllable position value at the specified position, including any value occupying that position.
 
 The position value cannot be 0, and it must be confined to the current extremities.
+
+If this position is a semisyllable, then the entire semisyllable deletes,
+and the surrounding consonant positions become reanalyzed as part of the main syllable or other semisyllables.
 
 This transformation cannot take a condition; it always applies categorically.
 

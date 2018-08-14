@@ -22,10 +22,11 @@ public class StressShiftTransformation extends Transformation {
 	private Boolean syllablePositionAbsolute;
 	
 	@Builder
-	public StressShiftTransformation(SyllableCondition condition, Integer order, Integer shift) {
+	public StressShiftTransformation(SyllableCondition condition, Integer order, Integer shift, Boolean syllablePositionAbsolute) {
         super(TransformationType.STRESS_SHIFT, condition);
         this.order = order;
         this.shift = shift;
+        this.syllablePositionAbsolute = syllablePositionAbsolute;
     }
 
     public static class StressShiftTransformationBuilder extends TransformationBuilder {
@@ -41,6 +42,7 @@ public class StressShiftTransformation extends Transformation {
 	    return StressShiftTransformation.builder()
                 .order(TypeUtils.getIntegerFromItem(item.get("order")))
                 .shift(TypeUtils.getIntegerFromItem(item.get("shift")))
+                .syllablePositionAbsolute(TypeUtils.getBooleanFromItem(item.get("syllablePositionAbsolute")))
                 .condition(SyllableCondition.getFromItem(item.get("condition").getM(), location + ": syllable condition"))
                 .build();
     }

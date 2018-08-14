@@ -32,6 +32,7 @@ public class StressParadigmSyllableCondition extends SyllableCondition {
     }
 
     public static StressParadigmSyllableCondition getFromItem(Map<String, AttributeValue> item, String location) {
+        item.computeIfAbsent("order", key -> new AttributeValue().withN("1"));
         ExceptionUtils.checkObjectElements(
                 Arrays.asList("order", "positions"),
                 Arrays.asList(NUMBER, LIST),

@@ -554,8 +554,13 @@ For each position in the `positions` list, if the word satisfies its syllable co
 Required fields:
 
 ```
-order: <int>
 positions: [{ value: <int>, condition: <syllable condition> }]
+```
+
+Optional fields with their defaults:
+
+```
+order: 1
 ```
 
 #### FOLLOWS_FROM_LAST_STEP
@@ -747,13 +752,13 @@ If it is false, then the index stops at word boundaries.
 Required fields:
 
 ```
-order: <int>
 shift: <int>
 ```
 
 Optional fields with their defaults:
 
 ```
+order: 1
 syllablePositionAbsolute: false
 condition: { type: DEFAULT }
 ```

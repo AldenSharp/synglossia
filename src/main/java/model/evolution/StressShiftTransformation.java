@@ -34,6 +34,7 @@ public class StressShiftTransformation extends Transformation {
     }
 
     public static StressShiftTransformation getFromItem(Map<String, AttributeValue> item, String location) {
+        item.computeIfAbsent("order", key -> new AttributeValue().withN("1"));
         item.computeIfAbsent("syllablePositionAbsolute", key -> new AttributeValue().withBOOL(false));
         ExceptionUtils.checkObjectElements(
                 Arrays.asList("order", "shift", "syllablePositionAbsolute"),

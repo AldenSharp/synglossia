@@ -46,6 +46,8 @@ public class Transformation {
                 return SyllableCollapseTransformation.getFromItem(item, locationWithType);
             case SYLLABLE_INSERTION:
                 return SyllableInsertionTransformation.getFromItem(item, locationWithType);
+            case ACCENT:
+                return AccentTransformation.getFromItem(item, locationWithType);
             case STRESS_SHIFT:
                 return StressShiftTransformation.getFromItem(item, locationWithType);
             case SYLLABLE_POSITION_INSERTION:

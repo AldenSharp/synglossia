@@ -684,7 +684,7 @@ Phonemes swap places.
 Required fields:
 
 ```
-swap: { fromPosition: <int>, syllableShift: <int>, toPosition: <int> }
+swap: <sound migration>
 ```
 
 Optional fields with their defaults:
@@ -720,7 +720,6 @@ position: <int>
 Optional fields with their defaults:
 
 ```
-reiterate: false
 condition: { type: DEFAULT }
 ```
 
@@ -737,6 +736,21 @@ phonemes: [<phoneme string>]
 Optional fields with their defaults:
 
 ```
+condition: { type: DEFAULT }
+```
+
+#### ACCENT
+
+An accent is set on the given syllable, of order given by the value of `order`.
+
+There are no required fields.
+
+Optional fields with their defaults:
+
+```
+order: 1,
+syllablePosition: 0,
+syllablePositionAbsolute: false,
 condition: { type: DEFAULT }
 ```
 

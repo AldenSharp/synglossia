@@ -527,6 +527,18 @@ Optional fields with their defaults:
 order: 1
 ```
 
+#### AFTER_STRESS
+
+Syllable is located after the last syllable with the `order` value.
+
+There are no required fields.
+
+Optional fields with their defaults:
+
+```
+order: 1
+```
+
 #### STRESS_EXISTENCE
 
 For each value in the `orders` list, the word has at least one syllable that takes stress of that order.

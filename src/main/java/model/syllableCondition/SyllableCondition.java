@@ -73,6 +73,8 @@ public class SyllableCondition {
                 return StressedSyllableCondition.getFromItem(item, locationWithType);
             case BEFORE_STRESS:
                 return BeforeStressSyllableCondition.getFromItem(item, locationWithType);
+            case AFTER_STRESS:
+                return AfterStressSyllableCondition.getFromItem(item, locationWithType);
             case STRESS_EXISTENCE:
                 return StressExistenceSyllableCondition.getFromItem(item, locationWithType);
             case STRESS_UNIQUENESS:

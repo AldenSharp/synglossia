@@ -28,6 +28,10 @@ public class LanguageHandler {
     }
 
     public NounRoot getRandomNounRoot(Map<String, String> languageNameMap) {
-        return wordService.getRandomNounRoot(languageNameMap.get("a"));
+        return wordService.getRandomNounRoot(
+                languageNameMap.get("languageName"),
+                languageNameMap.get("gender"),
+                languageNameMap.get("class")
+                );
     }
 }

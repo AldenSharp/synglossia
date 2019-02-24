@@ -3,6 +3,8 @@ package service;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import model.NounRoot;
 import model.Word;
+import model.grammar.Gender;
+import model.grammar.PartOfSpeech;
 
 import java.util.List;
 import java.util.Map;
@@ -22,12 +24,14 @@ public class WordService {
         return Word.getFromItem(wordItem);
     }
 
-    public NounRoot getRandomNounRoot(String languageName) {
+    public NounRoot getRandomNounRoot(String languageName, String gender, String className) {
         List<Map<String, AttributeValue>> morphemeItems = dynamoDBService.getSemanticMorphemes(languageName);
         List<Map<String, AttributeValue>> nounRootItems = morphemeItems.stream()
                 .filter(morphemeItem ->
-                        morphemeItem.get("partOfSpeech").getS().equals("NOUN")
+                        morphemeItem.get("partOfSpeech").getS().equals(PartOfSpeech.NOUN.toString())
                                 && morphemeItem.get("type").getS().equals("ROOT")
+                                && morphemeItem.get("gender").getS().equals(gender)
+                                && morphemeItem.get("class").getS().equals(className)
                 )
                 .collect(Collectors.toList());
         Integer index = random.nextInt(nounRootItems.size());

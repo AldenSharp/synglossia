@@ -40,6 +40,9 @@ public class VariantNounClass extends NounClass {
                 location, item
         );
         return VariantNounClass.builder()
+                .name(TypeUtils.getStringFromItem(item.get("name")))
+                .genders(Gender.getListFromItemList(item.get("genders").getL(), location + ": gender"))
+                .endingStartPosition(TypeUtils.getIntegerFromItem(item.get("endingStartPosition")))
                 .defaultClass(TypeUtils.getStringFromItem(item.get("defaultClass")))
                 .condition(SyllableCondition.getFromItem(item.get("condition").getM(), location + ": condition"))
                 .build();

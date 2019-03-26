@@ -15,9 +15,7 @@ public class LanguageHandler {
     private LanguageService languageService = new LanguageService();
     private WordService wordService = new WordService();
 
-    public List<String> getParentLanguageNames() {
-        return languageService.getParentLanguageNames();
-    }
+    public List<String> getLanguageNames() { return languageService.getLanguageNames(); }
 
     public Syngloss getSyngloss(Map<String, String> languageNameMap) throws IOException {
         return languageService.getSyngloss(languageNameMap.get("a"));

@@ -21,6 +21,7 @@ import static util.FieldType.*;
 @Builder
 public class Syngloss {
     private String name;
+    private SynglossType type;
     private Integer date;
     private Phonology phonology;
     private Morphology morphology;
@@ -37,6 +38,7 @@ public class Syngloss {
         );
         return Syngloss.builder()
                 .name(TypeUtils.getStringFromItem(item.get("name")))
+                .type(SynglossType.PARENT)
                 .date(TypeUtils.getIntegerFromItem(item.get("date")))
                 .phonology(Phonology.getFromItem(item.get("phonology").getM(), "Syngloss phonology"))
                 .morphology(Morphology.getFromItem(item.get("morphology").getM(), "Syngloss morphology"))

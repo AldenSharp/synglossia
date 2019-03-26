@@ -10,30 +10,41 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.QueryRequest;
+import com.amazonaws.services.dynamodbv2.model.ScanRequest;
 
 class DynamoDBService {
 
-    List<Map<String, AttributeValue>> getAllParentLanguages() {
-        Map<String, String> nameMap = new HashMap<>();
-        nameMap.put("#type", "type");
-        Map<String, AttributeValue> valueMap = new HashMap<>();
-        valueMap.put(":type", new AttributeValue("PARENT"));
-        return dynamoDB().query(new QueryRequest()
+    List<Map<String, AttributeValue>> getAllLanguages() {
+        return dynamoDB().scan(new ScanRequest()
                 .withTableName("Language")
                 .withIndexName("type-index")
-                .withKeyConditionExpression("#type = :type")
-                .withExpressionAttributeNames(nameMap)
-                .withExpressionAttributeValues(valueMap)
         ).getItems();
     }
 
-    Map<String, AttributeValue> getLanguage(String name, String type) throws IOException {
+    Map<String, AttributeValue> getLanguage(String name) throws IOException {
+        Map<String, String> nameMap = new HashMap<>();
+        nameMap.put("#name", "name");
+        Map<String, AttributeValue> valueMap = new HashMap<>();
+        valueMap.put(":name", new AttributeValue(name));
+        List<Map<String, AttributeValue>> items = dynamoDB().query(new QueryRequest()
+                .withTableName("Language")
+                .withKeyConditionExpression("#name = :name")
+                .withExpressionAttributeNames(nameMap)
+                .withExpressionAttributeValues(valueMap)
+        ).getItems();
+        if (items.isEmpty()) {
+            throw new IOException("Language '" + name + "' is not found in the database.");
+        }
+        return items.get(0);
+    }
+
+    Map<String, AttributeValue> getDescendantLanguage(String name) throws IOException {
         Map<String, String> nameMap = new HashMap<>();
         nameMap.put("#name", "name");
         nameMap.put("#type", "type");
         Map<String, AttributeValue> valueMap = new HashMap<>();
         valueMap.put(":name", new AttributeValue(name));
-        valueMap.put(":type", new AttributeValue(type));
+        valueMap.put(":type", new AttributeValue("DESCENDANT"));
         List<Map<String, AttributeValue>> items = dynamoDB().query(new QueryRequest()
                 .withTableName("Language")
                 .withKeyConditionExpression("#name = :name")
@@ -42,7 +53,7 @@ class DynamoDBService {
                 .withExpressionAttributeValues(valueMap)
         ).getItems();
         if (items.isEmpty()) {
-            throw new IOException("Language '" + name + "' of type '" + type + "' is not found in the database.");
+            throw new IOException("Language '" + name + "' of type 'DESCENDANT' is not found in the database.");
         }
         return items.get(0);
     }

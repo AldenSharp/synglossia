@@ -72,6 +72,19 @@ class DynamoDBService {
         ).getItems();
     }
 
+    List<Map<String, AttributeValue>> getAncestorEvolutions(String descendantLanguage) {
+        Map<String, String> nameMap = new HashMap<>();
+        nameMap.put("#descendantLanguage", "descendantLanguage");
+        Map<String, AttributeValue> valueMap = new HashMap<>();
+        valueMap.put(":descendantLanguage", new AttributeValue(descendantLanguage));
+        return dynamoDB().query(new QueryRequest()
+                .withTableName("Evolution")
+                .withKeyConditionExpression("#descendantLanguage = :descendantLanguage")
+                .withExpressionAttributeNames(nameMap)
+                .withExpressionAttributeValues(valueMap)
+        ).getItems();
+    }
+
     List<Map<String, AttributeValue>> getWritingSystems(String language) {
         Map<String, String> nameMap = new HashMap<>();
         nameMap.put("#language", "language");

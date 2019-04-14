@@ -1,6 +1,7 @@
 package service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -68,5 +69,14 @@ public class LanguageService {
             return null;
         }
         return DescendantLanguage.getFromItemAndEvolution(descendantLanguageItem, evolution);
+    }
+
+    public List<Syngloss> getAncestorSynglosses(String descendantLanguage) {
+        List<Map<String, AttributeValue>> evolutionItems = dynamoDBService.getAncestorEvolutions(descendantLanguage);
+        /*
+        TODO: For each evolutionItem, get its parentLanguage's syngloss object.
+        TODO: If this syngloss has type PARENT, then build the full syngloss.
+         */
+        return new ArrayList<>();
     }
 }

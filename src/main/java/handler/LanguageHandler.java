@@ -7,6 +7,7 @@ import java.util.Map;
 import model.NounRoot;
 import model.Syngloss;
 import model.Word;
+import model.evolution.Evolution;
 import service.LanguageService;
 import service.WordService;
 
@@ -31,5 +32,9 @@ public class LanguageHandler {
                 languageNameMap.get("gender"),
                 languageNameMap.get("class")
                 );
+    }
+
+    public List<Syngloss> getAncestorSynglosses(Map<String, String> languageNameMap) {
+        return languageService.getAncestorSynglosses(languageNameMap.get("a"));
     }
 }

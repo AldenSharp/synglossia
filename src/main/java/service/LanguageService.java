@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import model.Syngloss;
-import model.SynglossType;
 import model.evolution.*;
 import model.writingSystem.WritingSystem;
 
@@ -25,11 +24,12 @@ public class LanguageService {
 
     public Syngloss getSyngloss(String languageName) throws IOException {
         Map<String, AttributeValue> languageItem = dynamoDBService.getLanguage(languageName);
-        Syngloss syngloss = Syngloss.getFromItem(languageItem);
+        List<AncestorLanguage> ancestorLanguages = getAncestorLanguagesFromData(languageItem.get("name").getS());
+        Syngloss syngloss = Syngloss.getFromItem(languageItem, ancestorLanguages.isEmpty());
         syngloss.setDescendantLanguages(getDescendantLanguagesFromData(languageItem.get("name").getS()));
-        syngloss.setAncestorLanguages(getAncestorLanguagesFromData(languageItem.get("name").getS()));
+        syngloss.setAncestorLanguages(ancestorLanguages);
         syngloss.setWritingSystems(getWritingSystemsFromData(languageName));
-        if (syngloss.getType().equals(SynglossType.PARENT)) {
+        if (ancestorLanguages.isEmpty()) {
             List<Map<String, AttributeValue>> morphemeItems = dynamoDBService.getGrammaticalMorphemes(languageName);
             syngloss.getMorphology().setMorphemes(morphemeItems);
         }

@@ -15,9 +15,7 @@ import com.amazonaws.services.dynamodbv2.model.ScanRequest;
 class DynamoDBService {
 
     List<Map<String, AttributeValue>> getAllLanguages() {
-        return dynamoDB().scan(new ScanRequest()
-                .withTableName("Language")
-                .withIndexName("type-index")
+        return dynamoDB().scan(new ScanRequest().withTableName("Language")
         ).getItems();
     }
 

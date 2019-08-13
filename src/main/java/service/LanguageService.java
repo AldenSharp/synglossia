@@ -1,8 +1,6 @@
 package service;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -12,7 +10,6 @@ import model.Syngloss;
 import model.SynglossType;
 import model.evolution.*;
 import model.writingSystem.WritingSystem;
-import util.TypeUtils;
 
 public class LanguageService {
 
@@ -28,19 +25,15 @@ public class LanguageService {
 
     public Syngloss getSyngloss(String languageName) throws IOException {
         Map<String, AttributeValue> languageItem = dynamoDBService.getLanguage(languageName);
-        if (languageItem.get("type").getS().equals("PARENT")) {
-            Syngloss syngloss = Syngloss.getFromItem(languageItem);
-            syngloss.setWritingSystems(getWritingSystemsFromData(languageName));
-            syngloss.setDescendantLanguages(getDescendantLanguagesFromData(languageName));
+        Syngloss syngloss = Syngloss.getFromItem(languageItem);
+        syngloss.setDescendantLanguages(getDescendantLanguagesFromData(languageItem.get("name").getS()));
+        syngloss.setAncestorLanguages(getAncestorLanguagesFromData(languageItem.get("name").getS()));
+        syngloss.setWritingSystems(getWritingSystemsFromData(languageName));
+        if (syngloss.getType().equals(SynglossType.PARENT)) {
             List<Map<String, AttributeValue>> morphemeItems = dynamoDBService.getGrammaticalMorphemes(languageName);
             syngloss.getMorphology().setMorphemes(morphemeItems);
-            return syngloss;
         }
-        return Syngloss.builder()
-                .name(TypeUtils.getStringFromItem(languageItem.get("name")))
-                .type(SynglossType.DESCENDANT)
-                .date(TypeUtils.getIntegerFromItem(languageItem.get("date")))
-                .build();
+        return syngloss;
     }
 
     private List<WritingSystem> getWritingSystemsFromData(String language) {
@@ -51,7 +44,7 @@ public class LanguageService {
     }
 
     public List<DescendantLanguage> getDescendantLanguagesFromData(String parentLanguage) {
-        List<Map<String, AttributeValue>> evolutionItems = dynamoDBService.getEvolutions(parentLanguage);
+        List<Map<String, AttributeValue>> evolutionItems = dynamoDBService.getDescendantEvolutions(parentLanguage);
         List<Evolution> evolutions = Evolution.getListFromItemList(evolutionItems, parentLanguage + " data");
         return evolutions.stream()
                 .map(this::getDescendantLanguageFromEvolution)
@@ -61,7 +54,7 @@ public class LanguageService {
     private DescendantLanguage getDescendantLanguageFromEvolution(Evolution evolution) {
         Map<String, AttributeValue> descendantLanguageItem;
         try {
-            descendantLanguageItem = dynamoDBService.getDescendantLanguage(
+            descendantLanguageItem = dynamoDBService.getLanguage(
                     evolution.getDescendantLanguage()
             );
         } catch (IOException e) {
@@ -71,12 +64,24 @@ public class LanguageService {
         return DescendantLanguage.getFromItemAndEvolution(descendantLanguageItem, evolution);
     }
 
-    public List<Syngloss> getAncestorSynglosses(String descendantLanguage) {
+    public List<AncestorLanguage> getAncestorLanguagesFromData(String descendantLanguage) {
         List<Map<String, AttributeValue>> evolutionItems = dynamoDBService.getAncestorEvolutions(descendantLanguage);
-        /*
-        TODO: For each evolutionItem, get its parentLanguage's syngloss object.
-        TODO: If this syngloss has type PARENT, then build the full syngloss.
-         */
-        return new ArrayList<>();
+        List<Evolution> evolutions = Evolution.getListFromItemList(evolutionItems, descendantLanguage + " data");
+        return evolutions.stream()
+                .map(this::getAncestorLanguageFromEvolution)
+                .collect(Collectors.toList());
+    }
+
+    private AncestorLanguage getAncestorLanguageFromEvolution(Evolution evolution) {
+        Map<String, AttributeValue> ancestorLanguageItem;
+        try {
+            ancestorLanguageItem = dynamoDBService.getLanguage(
+                    evolution.getParentLanguage()
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return AncestorLanguage.getFromItemAndEvolution(ancestorLanguageItem, evolution);
     }
 }

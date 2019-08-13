@@ -20,7 +20,7 @@ public class Evolution {
     private String descendantLanguage;
     private List<EvolutionStep> evolution;
 
-    private static Evolution getFromItem(Map<String, AttributeValue> item, String location) {
+    public static Evolution getFromItem(Map<String, AttributeValue> item, String location) {
         ExceptionUtils.checkObjectElements(
                 Arrays.asList("parentLanguage", "descendantLanguage", "evolution"),
                 Arrays.asList(STRING, STRING, LIST),

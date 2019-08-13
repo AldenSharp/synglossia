@@ -38,27 +38,7 @@ class DynamoDBService {
         return items.get(0);
     }
 
-    Map<String, AttributeValue> getDescendantLanguage(String name) throws IOException {
-        Map<String, String> nameMap = new HashMap<>();
-        nameMap.put("#name", "name");
-        nameMap.put("#type", "type");
-        Map<String, AttributeValue> valueMap = new HashMap<>();
-        valueMap.put(":name", new AttributeValue(name));
-        valueMap.put(":type", new AttributeValue("DESCENDANT"));
-        List<Map<String, AttributeValue>> items = dynamoDB().query(new QueryRequest()
-                .withTableName("Language")
-                .withKeyConditionExpression("#name = :name")
-                .withFilterExpression("#type = :type")
-                .withExpressionAttributeNames(nameMap)
-                .withExpressionAttributeValues(valueMap)
-        ).getItems();
-        if (items.isEmpty()) {
-            throw new IOException("Language '" + name + "' of type 'DESCENDANT' is not found in the database.");
-        }
-        return items.get(0);
-    }
-
-    List<Map<String, AttributeValue>> getEvolutions(String parentLanguage) {
+    List<Map<String, AttributeValue>> getDescendantEvolutions(String parentLanguage) {
         Map<String, String> nameMap = new HashMap<>();
         nameMap.put("#parentLanguage", "parentLanguage");
         Map<String, AttributeValue> valueMap = new HashMap<>();

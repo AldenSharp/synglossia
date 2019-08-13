@@ -33,8 +33,4 @@ public class LanguageHandler {
                 languageNameMap.get("class")
                 );
     }
-
-    public List<Syngloss> getAncestorSynglosses(Map<String, String> languageNameMap) {
-        return languageService.getAncestorSynglosses(languageNameMap.get("a"));
-    }
 }
